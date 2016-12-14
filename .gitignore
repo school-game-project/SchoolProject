@@ -6,4 +6,6 @@ Temp/
 Temp/*
 Temp
 
+*.vs
+
 ~*
