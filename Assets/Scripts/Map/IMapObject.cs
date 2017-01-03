@@ -8,6 +8,8 @@ namespace Assets.Scripts.Map
 {
     public interface IMapObject
     {
+        float XOffset { get; set; }
+        float ZOffset { get; set; }
         bool IsObstacle { get; }
         Transform GetTransform();
     }
