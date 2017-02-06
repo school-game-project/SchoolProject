@@ -17,9 +17,10 @@ public class MapFactory : MonoBehaviour
     public int yOffset;
     public int houseCount;
     public int distanceScale;
+    public int spawnPosX;
+    public int spawnPosZ;
+    public Transform player;
 
-    int spawnPosX;
-    int spawnPosZ;
     int endPosX;
     int endPosZ;
     IMapObject[,] map;
@@ -36,6 +37,10 @@ public class MapFactory : MonoBehaviour
         CreateGround();
         CreateBorders();
         CreateOutlands();
+
+        // Spieler erstellen:
+        Instantiate(player, new Vector3(spawnPosX * distanceScale, 1, spawnPosZ * distanceScale), Quaternion.identity);
+
         CreateLayout();
     }
 
