@@ -17,13 +17,13 @@ public class movement_test_sphere : MonoBehaviour {
         speedX = 0;
         speedZ = 0;
         if (Input.GetKey(KeyCode.D))
-            speedX += 6;
+            speedX += 15;
         if (Input.GetKey(KeyCode.A))
-            speedX -= 6;
+            speedX -= 15;
         if (Input.GetKey(KeyCode.W))
-            speedZ += 6;
+            speedZ += 15;
         if (Input.GetKey(KeyCode.S))
-            speedZ -= 6;
+            speedZ -= 15;
 
         rb.velocity = new Vector3(speedX, 0, speedZ);
     }
