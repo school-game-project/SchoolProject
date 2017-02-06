@@ -2,15 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour {
+public class Item : MonoBehaviour
+{
+    #region Fields & Props
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private static int _ID;
+    public static int ID
+    {
+        get { return _ID; }
+        set { _ID = value; }
+    }
+
+    private static string _Name;
+    public static string Name
+    {
+        get { return _Name; }
+        set { _Name = value; }
+    }
+
+    private int _Amount;
+    public int Amount
+    {
+        get { return _Amount; }
+        set { _Amount = value; }
+    }
+
+    #endregion // Fields & Props
+
+    #region Methods
+
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+
+    }
+
+    #endregion // Methods
+
+    #region Events
+
+    #endregion // Events
 }
