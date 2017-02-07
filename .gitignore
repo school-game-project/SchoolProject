@@ -8,6 +8,10 @@ Temp
 
 *.vs
 *.unity
+<<<<<<< HEAD
 *.csproj
 
 ~*
+=======
+~*
+>>>>>>> origin/master
