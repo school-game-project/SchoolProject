@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour {
         //Walk Forward
         if (Input.GetKey(KeyCode.W)) 
         {
+            Debug.Log("test");
             rb.velocity = new Vector3(rb.velocity.x, 0, speed);
         }
 

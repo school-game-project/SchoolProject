@@ -24,6 +24,7 @@ public class MapFactory : MonoBehaviour
     int endPosX;
     int endPosZ;
     IMapObject[,] map;
+    GameObject parent;
 
     #endregion
 
@@ -33,6 +34,7 @@ public class MapFactory : MonoBehaviour
     {
         //Basis Werte initialisieren
         map = new IMapObject[mapSize, mapSize];
+        parent = GameObject.Find("MapFactory");
 
         CreateGround();
         CreateBorders();
@@ -60,8 +62,9 @@ public class MapFactory : MonoBehaviour
         {
             for (int j = 0; j < mapSize; j++)
             {
-                Instantiate(masterGroundTile.GetTransform(), new Vector3((i*distanceScale) + masterGroundTile.XOffset, yOffset, 
+                Transform placedObj = Instantiate(masterGroundTile.GetTransform(), new Vector3((i*distanceScale) + masterGroundTile.XOffset, yOffset, 
                     (j*distanceScale) + masterGroundTile.ZOffset), Quaternion.identity);
+                placedObj.SetParent(parent.transform);
                 map[i, j] = masterGroundTile;
             }
         }
@@ -123,8 +126,11 @@ public class MapFactory : MonoBehaviour
 
                 if (ShouldPlaceObject(x, z))
                 {
-                    Instantiate((currPair.Key.GetTransform()), new Vector3((x*distanceScale) + currPair.Key.XOffset, 
+                    Transform placedObj = Instantiate((currPair.Key.GetTransform()), new Vector3((x*distanceScale) + currPair.Key.XOffset, 
                         yOffset, (z*distanceScale) + currPair.Key.ZOffset), Quaternion.identity);
+                    placedObj.SetParent(parent.transform);
+                    
+
                     map[x, z] = currPair.Key;
                     placed++;
                 }
