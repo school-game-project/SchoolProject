@@ -22,5 +22,16 @@ namespace Assets.Scripts.Map
             //TODO maybe add some randomisation
             return Transform1;
         }
+
+        private void Start()
+        {
+            //mine event von Player subscriben
+            ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineTriggered += Tree_MineTriggered;
+        }
+
+        private void Tree_MineTriggered(GameObject target)
+        {
+            Debug.LogWarning("MineTriggered");
+        }
     }
 }
