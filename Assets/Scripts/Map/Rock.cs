@@ -22,5 +22,51 @@ namespace Assets.Scripts.Map
             //TODO maybe add some randomisation
             return Transform1;
         }
+
+        private void Start()
+        {
+            ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineTriggered += Rock_MineTriggered;
+            ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineCanceled += Rock_MineCanceled;
+            ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineFinished += Rock_MineFinished;
+        }
+
+        private void Rock_MineFinished(GameObject target)
+        {
+            if (target.tag == "Stone")
+            {
+                FinishMining(target);
+            }
+        }
+
+        private void Rock_MineCanceled(GameObject target)
+        {
+            if (target.tag == "Stone")
+            {
+                
+            }
+        }
+
+        private void Rock_MineTriggered(GameObject target)
+        {
+            if (target.tag == "Stone")
+            {
+               
+            }
+        }
+
+        private void StopMining()
+        {
+            //TODO cancle animations
+        }
+
+        private void FinishMining(GameObject target)
+        {
+            Destroy(target);
+        }
+
+        private void StartMining(GameObject target)
+        {
+            //TODO animate stuff
+        }
     }
 }

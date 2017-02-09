@@ -2,26 +2,68 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Map;
+
 public class ActionDetecter : MonoBehaviour {
 
     bool canTrigger = false;
     GameObject toMine;
     bool blocked = false;
-    public delegate void MineEventHandler(GameObject target);
-    public event MineEventHandler MineTriggered;
+    double currMineCounter = 0;
+    Animation animation;
 
-    
+    public int mineDuration = 120;
+
+    public delegate void MineEventHandler(GameObject target);
+
+    public event MineEventHandler MineTriggered;
+    public event MineEventHandler MineCanceled;
+    public event MineEventHandler MineFinished;
+
+    private void Start()
+    {
+        animation = ((Animation)this.gameObject.GetComponent("Animation"));
+    }
+
     void Update()
     {
         if (Input.GetKey(KeyCode.E))
         {
             //Event trigger
-            if (!blocked)
+            if (!blocked && canTrigger)
             {
                 MineTriggered(toMine);
                 blocked = true;
+                currMineCounter = 0;
+                this.transform.GetChild(1).gameObject.SetActive(true);
+                animation.Play("orcdamage");
             }
-            //TODO MineStopped nach timeinterval triggern
+            if (blocked)
+            {
+                currMineCounter++;
+                if (currMineCounter >= mineDuration)
+                {
+                    MineFinished(toMine);
+                    canTrigger = false;
+                    blocked = false;
+                    toMine = null;
+                    this.transform.GetChild(0).gameObject.SetActive(false);
+                    this.transform.GetChild(1).gameObject.SetActive(false);
+                    animation.Stop("orcdamage");
+                    animation.Play("orcwalk");
+                }
+            }
+        }
+        else
+        {
+            if (blocked)
+            {
+                MineCanceled(toMine);
+                blocked = false;
+                currMineCounter = 0;
+                this.transform.GetChild(1).gameObject.SetActive(false);
+                animation.Stop("orcdamage");
+                animation.Play("orcwalk");
+            }
         }
     }
 
@@ -34,8 +76,12 @@ public class ActionDetecter : MonoBehaviour {
 
     private void OnTriggerExit(Collider coll)
     {
-        this.transform.GetChild(0).gameObject.SetActive(false);
         canTrigger = false;
+        toMine = coll.gameObject;
+        this.transform.GetChild(0).gameObject.SetActive(false);
+        this.transform.GetChild(1).gameObject.SetActive(false);
+        animation.Stop("orcdamage");
+        animation.Play("orcwalk");
     }
 
 }

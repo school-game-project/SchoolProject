@@ -20,6 +20,7 @@ public class MapFactory : MonoBehaviour
     public int spawnPosX;
     public int spawnPosZ;
     public Transform player;
+    public Transform wall;
 
     int endPosX;
     int endPosZ;
@@ -46,12 +47,6 @@ public class MapFactory : MonoBehaviour
         CreateLayout();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     #endregion
 
     #region Methods
@@ -72,15 +67,33 @@ public class MapFactory : MonoBehaviour
 
     private void CreateBorders()
     {
-        //TODO adjust
         for (int i = 0; i < mapSize; i++)
         {
             for (int j = 0; j < mapSize; j++)
             {
-                if (i == 0 || j == 0 || i == mapSize - 1 || j == mapSize - 1)
+                if (i == 0)
                 {
-                    //Instantiate(block, new Vector3(i - offSet, 1, j - offSet), Quaternion.identity);
-                    //map[i, j] = wert;
+                    Transform placedObj = Instantiate(wall, new Vector3((i-1) * distanceScale, 0, j * distanceScale), Quaternion.identity);
+                    placedObj.SetParent(parent.transform);
+                }
+                if (j == 0)
+                {
+                    Transform placedObj = Instantiate(wall, new Vector3((i-1) * distanceScale, 0, (j-1) * distanceScale), Quaternion.identity);
+                    placedObj.Rotate(new Vector3(0, -90, 0));
+                    placedObj.SetParent(parent.transform);
+                }
+                if(i == mapSize - 1)
+                {
+                    Transform placedObj = Instantiate(wall, new Vector3(i * distanceScale, 0, (j-1) * distanceScale), Quaternion.identity);
+                    placedObj.Rotate(new Vector3(0, 180, 0));
+                    placedObj.SetParent(parent.transform);
+
+                }
+                if (j == mapSize - 1)
+                {
+                    Transform placedObj = Instantiate(wall, new Vector3(i * distanceScale, 0, j * distanceScale), Quaternion.identity);
+                    placedObj.Rotate(new Vector3(0, 90, 0));
+                    placedObj.SetParent(parent.transform);
                 }
             }
         }

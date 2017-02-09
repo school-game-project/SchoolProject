@@ -75,8 +75,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Resources\LoadingBars\scripts\scene1.cs" />
+    <Compile Include="Assets\Resources\LoadingBars\scripts\scene2.cs" />
+    <Compile Include="Assets\Resources\LoadingBars\scripts\scene3.cs" />
     <Compile Include="Assets\Scripts\ActionDetecter.cs" />
     <Compile Include="Assets\Scripts\Food.cs" />
+    <Compile Include="Assets\Scripts\HPBarSlider.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
     <Compile Include="Assets\Scripts\Map\GroundTile.cs" />
