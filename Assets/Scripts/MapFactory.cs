@@ -21,7 +21,10 @@ public class MapFactory : MonoBehaviour
     public int spawnPosZ;
     public Transform player;
     public Transform wall;
+    public Transform home;
+    public int homeSize;
 
+    string savePath = @"C:\test\MapFile.txt";
     int endPosX;
     int endPosZ;
     IMapObject[,] map;
@@ -33,6 +36,29 @@ public class MapFactory : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (!System.IO.File.Exists(savePath))
+            GenerateNewMap();
+        else
+            LoadFromSaveFile();
+    }
+
+    //TESTING STUFF TO BE REMOVED
+    int count = 0;
+
+    private void Update()
+    {
+        count++;
+        if (count == 100)
+            SaveMap();
+    }
+    //TESTING STUFF TO BE REMOVED
+
+    #endregion
+
+    #region Methods
+
+    private void GenerateNewMap()
+    {
         //Basis Werte initialisieren
         map = new IMapObject[mapSize, mapSize];
         parent = GameObject.Find("MapFactory");
@@ -41,15 +67,98 @@ public class MapFactory : MonoBehaviour
         CreateBorders();
         CreateOutlands();
 
+        // Basis erstellen:
+        Instantiate(home, new Vector3(spawnPosX * distanceScale, 0, spawnPosZ * distanceScale), Quaternion.identity);
+        for (int i = spawnPosX; i < spawnPosX + homeSize; i++)
+        {
+            for (int j = spawnPosZ; j < spawnPosZ + homeSize; j++)
+            {
+                map[i, j] = new Spawn();
+            }
+        }
         // Spieler erstellen:
         Instantiate(player, new Vector3(spawnPosX * distanceScale, 1, spawnPosZ * distanceScale), Quaternion.identity);
 
         CreateLayout();
     }
 
-    #endregion
+    private void LoadFromSaveFile() 
+    {
+        map = new IMapObject[mapSize, mapSize];
+        parent = GameObject.Find("MapFactory");
 
-    #region Methods
+        CreateGround();
+        CreateBorders();
+        CreateOutlands();
+
+        // Basis erstellen:
+        Instantiate(home, new Vector3(spawnPosX * distanceScale, 0, spawnPosZ * distanceScale), Quaternion.identity);
+        for (int i = spawnPosX; i < spawnPosX + homeSize; i++)
+        {
+            for (int j = spawnPosZ; j < spawnPosZ + homeSize; j++)
+            {
+                map[i, j] = new Spawn();
+            }
+        }
+        // Spieler erstellen:
+        Instantiate(player, new Vector3(spawnPosX * distanceScale, 1, spawnPosZ * distanceScale), Quaternion.identity);
+
+        //Objekte aus der SaveFile lesen und erstellen:
+        string[] mapStringArray = System.IO.File.ReadAllLines(savePath);
+        string mapString = string.Join("", mapStringArray);
+        LoadObjectsFromSaveFile(mapString);
+    }
+
+    private void LoadObjectsFromSaveFile(string mapString)
+    {
+        int counter = 0;
+        string[] objects = mapString.Split(';');
+        for (int i = 0; i < mapSize; i++)
+        {
+            for (int j = 0; j < mapSize; j++)
+            {
+                switch (objects[counter])
+                {
+                    case "Stone":
+                       Instantiate((masterRock.GetTransform()), new Vector3((i * distanceScale) + masterRock.XOffset,
+                        yOffset, (j * distanceScale) + masterRock.ZOffset), Quaternion.identity);
+                        map[i, j] = masterRock;
+                        break;
+                    case "Tree":
+                        Instantiate((masterTree.GetTransform()), new Vector3((i * distanceScale) + masterTree.XOffset,
+                      yOffset, (j * distanceScale) + masterTree.ZOffset), Quaternion.identity);
+                        map[i, j] = masterTree;
+                        break;
+                    case "House":
+                        Instantiate((masterHouse.GetTransform()), new Vector3((i * distanceScale) + masterHouse.XOffset,
+                      yOffset, (j * distanceScale) + masterHouse.ZOffset), Quaternion.identity);
+                        map[i, j] = masterHouse;
+                        break;
+                    default:
+                        //Wenn leer oder spawn: nix passiert
+                        break;
+                }
+                counter++;
+            }
+        }
+    }
+
+    private void SaveMap()
+    {
+        string mapString = "";
+
+        for (int i = 0; i < mapSize; i++)
+        {
+            for (int j = 0; j < mapSize; j++)
+            {
+                mapString += map[i, j].SaveString + ";";
+            }
+        }
+
+        System.IO.StreamWriter writer = System.IO.File.CreateText(savePath);
+        writer.WriteLine(mapString);
+        writer.Close();
+    }
 
     private void CreateGround()
     {

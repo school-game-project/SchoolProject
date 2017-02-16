@@ -75,6 +75,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\InventoryUI.cs" />
     <Compile Include="Assets\Resources\LoadingBars\scripts\scene1.cs" />
     <Compile Include="Assets\Resources\LoadingBars\scripts\scene2.cs" />
     <Compile Include="Assets\Resources\LoadingBars\scripts\scene3.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Assets\Scripts\Map\House.cs" />
     <Compile Include="Assets\Scripts\Map\IMapObject.cs" />
     <Compile Include="Assets\Scripts\Map\Rock.cs" />
+    <Compile Include="Assets\Scripts\Map\Spawn.cs" />
     <Compile Include="Assets\Scripts\Map\Tree.cs" />
     <Compile Include="Assets\Scripts\MapFactory.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />

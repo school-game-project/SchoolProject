@@ -69,9 +69,12 @@ public class ActionDetecter : MonoBehaviour {
 
     void OnTriggerEnter(Collider coll)
     {
-        canTrigger = true;
-        toMine = coll.gameObject;
-        this.transform.GetChild(0).gameObject.SetActive(true);
+        if (coll.tag == "Stone" || coll.tag == "Tree")
+        {
+            canTrigger = true;
+            toMine = coll.gameObject;
+            this.transform.GetChild(0).gameObject.SetActive(true);
+        }
     }
 
     private void OnTriggerExit(Collider coll)

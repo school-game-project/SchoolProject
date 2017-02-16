@@ -13,6 +13,7 @@ namespace Assets.Scripts.Map
         public  bool IsObstacle { get { return false; } }
         public float XOffset { get { return xOffset; } set { xOffset = value; } }
         public float ZOffset { get { return zOffset; } set { zOffset = value; } }
+        public string SaveString { get { return "Ground"; } }
 
         private float xOffset = 0;
         private float zOffset = 0;

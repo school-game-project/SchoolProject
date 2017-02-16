@@ -11,6 +11,7 @@ namespace Assets.Scripts.Map
         float XOffset { get; set; }
         float ZOffset { get; set; }
         bool IsObstacle { get; }
+        string SaveString { get; }
         Transform GetTransform();
     }
 }
