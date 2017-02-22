@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
+using System.Reflection;
 
 public class Inventory : MonoBehaviour
 {
     #region Fields & Props
 
-    private List<Item> _Items;
-    public List<Item> Items
+    private Item[,] _Items;
+    public Item[,] Items
     {
         get { return _Items; }
         set { _Items = value; }
@@ -20,41 +22,66 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        this._Items = new List<Item>();
-
-        this.GotNewItem += ItemIncreaseAmount;
-        this.RemovedItem += ItemDecreaseAmount; 
+        ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineFinished += this.GettingItem;
     }
 
-    public void AddItem(Item p_NewItem)
+    public void AddItem(Item p_Item)
     {
-        var query = this._Items.Where(i => i.GetType() == p_NewItem.GetType());
+        if (this._Items == null)
+        {
+            Vector2 inventorySize = ((InventoryUI)GameObject.Find("InventoryUI").GetComponent(typeof(InventoryUI)))._InventorySize;
+            this._Items = new Item[(int)inventorySize.x, (int)inventorySize.y];
+        }
 
-        if (query.Count() == 0)
-            this._Items.Add(p_NewItem);
-        
-        this.GotNewItem.Invoke(query.ToArray()[0]);
+        if (p_Item != null)
+            for (int i = 0; i < this._Items.GetLength(0); i++)
+                for (int j = 0; j < this._Items.GetLength(1); j++)
+                {
+                    if (this._Items[i, j] != null && this._Items[i, j].GetType() == p_Item.GetType())
+                    {
+                        this._Items[i, j].Amount++;
+                        this.GotItem(this._Items[i, j]);
+                        return;
+                    }
+
+                    else if (i == this._Items.GetLength(0) - 1 && j == this._Items.GetLength(1) - 1)
+                        this.AddNewItem(p_Item);
+                }
+    }
+
+    public void AddNewItem(Item p_Item)
+    {
+        if (p_Item != null)
+            for (int i = 0; i < this._Items.GetLength(0); i++)
+                for (int j = 0; j < this._Items.GetLength(1); j++)
+                    if (this._Items[i, j] == null)
+                    {
+                        this._Items[i, j] = p_Item;
+                        this.SetItemToSlot(this._Items[i, j], new Vector2(i, j));
+                        return;
+                    }
+    }
+
+    private void SetItemToSlot(Item p_Item, Vector2 p_Coord)
+    {
+        GameObject slot = GameObject.FindGameObjectsWithTag("Slot").First(s => s.name == String.Format("slot_{0}_{1}", p_Coord.y, p_Coord.x));
+
+        if (slot != null)
+        {
+            slot.GetComponent<Slot>().MyItem = p_Item;
+            this.GotItem(p_Item);
+        }
     }
 
     public void RemoveItem(Item p_Item)
     {
-        var query = this._Items.Where(i => i.GetType() == p_Item.GetType());
+        //var query = this._Items.Where(i => i.GetType() == p_Item.GetType());
 
-        if (query.Count() > 0)
-            this.RemovedItem(p_Item);
+        //if (query.Count() > 0)
+        //    //this.RemovedItem(p_Item);
 
-        if (query.Count() == 1)
-            this._Items.Remove(query.ToArray()[0]);
-    }
-
-    public void ItemIncreaseAmount(Item p_Item)
-    {
-        p_Item.Amount++;
-    }
-
-    public void ItemDecreaseAmount(Item p_Item)
-    {
-        p_Item.Amount--;
+        //if (query.Count() == 1)
+        //    this._Items.Remove(query.ToArray()[0]);
     }
     
     #endregion // Methods
@@ -62,19 +89,21 @@ public class Inventory : MonoBehaviour
     #region Events & Handler
 
     public delegate void ItemEventHandler(Item p_NewItem);
+    
+    public event ItemEventHandler GotItem;
+    //public event ItemEventHandler RemovedItem;
 
-    public event ItemEventHandler GotNewItem;
-    public event ItemEventHandler RemovedItem;
-
-    public void OnGotItem(object p_NewItem)
+    public void GettingItem(GameObject p_ItemHolder)
     {
-        if (GotNewItem != null && p_NewItem is Item)
-            GotNewItem(p_NewItem as Item);
+        string itemHolderName = p_ItemHolder.tag == "Stone" ? "Rock" : p_ItemHolder.tag;
+
+        if (p_ItemHolder.transform.parent.FindChild(String.Format("Master" + itemHolderName)).GetComponent<Item>() != null)
+            this.AddItem(p_ItemHolder.transform.parent.FindChild(String.Format("Master" + itemHolderName)).GetComponent<Item>());
     }
-    public void OnRemovedItem(object p_Item)
+
+    public void RemovingItem(object p_Item)
     {
-        if (RemovedItem != null && p_Item is Item)
-            RemovedItem(p_Item as Item);
+        // TODO removing event method
     }
 
     #endregion // Events & Handler

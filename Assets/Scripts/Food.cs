@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class Food : Item
 {
-	void Start ()
-    {
-		
-	}
+    #region Fields & Props
 
-    void Update ()
+    public override string _SpritePath { get; protected set; }
+
+    #endregion // Fields & Props
+
+    #region Methods
+
+    public override void Start()
     {
-		
-	}
+        this._SpritePath = @"";
+        base.Start();
+    }
+
+    #endregion // Methods
 }

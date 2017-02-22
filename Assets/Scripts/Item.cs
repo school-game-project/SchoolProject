@@ -27,18 +27,15 @@ public class Item : MonoBehaviour
         set { _Amount = value; }
     }
 
+    public virtual string _SpritePath { get; protected set; }
+
     #endregion // Fields & Props
 
     #region Methods
 
-    void Start()
+    public virtual void Start()
     {
-
-    }
-
-    void Update()
-    {
-
+        this._Amount = 1;
     }
 
     #endregion // Methods
