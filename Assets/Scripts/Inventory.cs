@@ -75,6 +75,8 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(Item p_Item)
     {
+        // TODO implement RemoveItem
+
         //var query = this._Items.Where(i => i.GetType() == p_Item.GetType());
 
         //if (query.Count() > 0)

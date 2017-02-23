@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System;
 
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour//, IPointerEnterHandler, IDragHandler
 {
     #region Fields & Props
 
@@ -39,6 +41,23 @@ public class Slot : MonoBehaviour
             }
         }
     }
+
+    //#region Drag & Drop
+    //
+    //public void OnPointerEnter(PointerEventData eventData)
+    //{
+    //    this.transform.parent.parent.parent.GetComponent<InventoryUI>().selectedSlot = this.transform;
+    //}
+    //
+    //public void OnDrag(PointerEventData eventData)
+    //{
+    //    if (eventData.button == PointerEventData.InputButton.Left)
+    //    {
+    //        this.transform.GetChild(0).position = Input.mousePosition;
+    //    }
+    //}
+    //
+    //#endregion // Drag & Drop
 
     #endregion // Methods
 }

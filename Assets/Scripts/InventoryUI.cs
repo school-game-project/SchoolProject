@@ -9,7 +9,8 @@ public class InventoryUI : MonoBehaviour
     #region Fields & Props
 
     public Vector2 _InventorySize;
-    
+    public Transform originalSlot, selectedSlot, selectedItem;
+
     #endregion // Fields & Props
 
     #region Methods
@@ -19,6 +20,8 @@ public class InventoryUI : MonoBehaviour
         InitInventoryBackGround();
         InitInventorySlots();
     }
+
+    #region Init
 
     private void InitInventoryBackGround()
     {
@@ -55,6 +58,8 @@ public class InventoryUI : MonoBehaviour
                 slot.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(childSize.x / this._InventorySize.x * 0.95f, childSize.y / this._InventorySize.y * 0.95f);
             }
     }
-    
+
+    #endregion // Init
+
     #endregion // Methods
 }
