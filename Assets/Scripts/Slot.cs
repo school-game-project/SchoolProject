@@ -25,7 +25,6 @@ public class Slot : MonoBehaviour//, IPointerEnterHandler, IDragHandler
     public void Start()
     {
         ((Inventory)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(Inventory))).GotItem += AddItem;
-        this.tag = "Slot";
     }
 
     private void AddItem(Item p_Item)
