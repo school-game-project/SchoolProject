@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -22,8 +23,12 @@ public class InventoryUI : MonoBehaviour
     {
         GenerateSlots();
 
-        //InitInventoryBackGround();
-        //InitInventorySlots();
+        GridLayoutGroup grid = this.contentBox.gameObject.GetComponent<GridLayoutGroup>();
+        Rect rect = this.gameObject.GetComponent<RectTransform>().rect;
+        float sqrtAOS = (float)Math.Sqrt(this.AmountOfSlots);
+
+        grid.cellSize = new Vector2(rect.width / (sqrtAOS + 2.8f), rect.height / (sqrtAOS + 2.8f));
+        grid.spacing = new Vector2(rect.width / (sqrtAOS * 30), rect.height / (sqrtAOS * 30));
     }
 
     #region Init
