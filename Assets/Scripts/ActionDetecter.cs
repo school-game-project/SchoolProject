@@ -10,8 +10,8 @@ public class ActionDetecter : MonoBehaviour {
     bool blocked = false;
     double currMineCounter = 0;
     Animation animation;
-
-    public int mineDuration = 120;
+    
+    int mineDuration = 120;
 
     public delegate void MineEventHandler(GameObject target);
 

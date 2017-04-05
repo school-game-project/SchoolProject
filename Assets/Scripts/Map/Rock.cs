@@ -62,12 +62,13 @@ namespace Assets.Scripts.Map
 
         private void FinishMining(GameObject target)
         {
-            Destroy(target);
+            target.GetComponent<Animator>().SetBool("falling", true);
+            Destroy(target, 1.5f);
         }
 
         private void StartMining(GameObject target)
         {
-            //TODO animate stuff
+
         }
     }
 }
