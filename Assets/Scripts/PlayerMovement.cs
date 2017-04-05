@@ -1,63 +1,73 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
-
-    [SerializeField]
-    private float speed;
-    [SerializeField]
-    private float defaultSpeed;
-    [SerializeField]
-    private bool diagonal;
+public class PlayerMovement : MonoBehaviour
+{
+    public float movespeed;
 
     private Rigidbody rb;
+    private bool walking;
 
 
-    void Start() 
+    private void Start()
     {
-        rb = this.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        if (Input.anyKey)
+        {
+            Move();
+
+            Rotate();
+        }
+        else
+        {
+            walking = false;
+        }
+
+        if(walking == true)
+        {
+            GetComponent<Animation>().Play("orcwalk");
+        }
+        else
+        {
+            GetComponent<Animation>().Play("orcattack");
+        }
     }
 
 
-    void Update() 
+    private void Move()
     {
-        if (rb.velocity.x != 0 && rb.velocity.z != 0)
+        if (Input.GetKey(KeyCode.W))
         {
-            speed = defaultSpeed / 2;
+            walking = true;
+            rb.velocity = transform.forward * movespeed;
         }
-        else 
+        else if (Input.GetKey(KeyCode.S))
         {
-            speed = defaultSpeed;
+            walking = true;
+            rb.velocity = transform.forward * -movespeed;
         }
-
-        Walk();
+        else
+        {
+            walking = false;
+        }
     }
 
-    private void Walk() 
+
+    private void Rotate()
     {
-        //Walk Forward
-        if (Input.GetKey(KeyCode.W)) 
-        {
-            Debug.Log("test");
-            rb.velocity = new Vector3(rb.velocity.x, 0, speed);
-        }
-
-        //Walk Backward
-        if (Input.GetKey(KeyCode.S))
-        {
-            rb.velocity = new Vector3(rb.velocity.x, 0, -speed);
-        }
-
-        //Walk Left
         if (Input.GetKey(KeyCode.A))
         {
-            rb.velocity = new Vector3(-speed, 0, rb.velocity.z);
+            transform.eulerAngles -= new Vector3(0, 3, 0);
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            transform.eulerAngles += new Vector3(0, 3, 0);
         }
 
-        //Walk Right
-        if (Input.GetKey(KeyCode.D))
-        {
-            rb.velocity = new Vector3(speed, 0, rb.velocity.z);
-        }
+        Debug.Log(transform.rotation.y);
     }
 }

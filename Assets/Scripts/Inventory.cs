@@ -16,63 +16,54 @@ public class Inventory : MonoBehaviour
         set { _Items = value; }
     }
 
+    private Dictionary<Slot, Item> _Slots;
+    public Dictionary<Slot, Item> Slots
+    {
+        get { return _Slots; }
+        set { _Slots = value; }
+    }
+
+    public Vector2 InventorySize;
+
     #endregion // Fields & Props
 
     #region Methods
 
     void Start()
     {
-        ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineFinished += this.GettingItem;
+        ((ActionDetecter)gameObject.GetComponent<ActionDetecter>()).MineFinished += this.GettingItem;
+        this._Slots = new Dictionary<Slot, Item>((int)(this.InventorySize.x * this.InventorySize.y));
     }
 
     public void AddItem(Item p_Item)
     {
-        if (this._Items == null)
-        {
-            Vector2 inventorySize = ((InventoryUI)GameObject.Find("InventoryUI").GetComponent(typeof(InventoryUI)))._InventorySize;
-            this._Items = new Item[(int)inventorySize.x, (int)inventorySize.y];
-        }
-
         if (p_Item != null)
-            for (int i = 0; i < this._Items.GetLength(0); i++)
-                for (int j = 0; j < this._Items.GetLength(1); j++)
+        {
+            foreach (var item in this._Slots)
+                if (item.Value != null && item.Value.GetType() == p_Item.GetType())
                 {
-                    if (this._Items[i, j] != null && this._Items[i, j].GetType() == p_Item.GetType())
-                    {
-                        this._Items[i, j].Amount++;
-                        this.GotItem(this._Items[i, j]);
-                        return;
-                    }
-
-                    else if (i == this._Items.GetLength(0) - 1 && j == this._Items.GetLength(1) - 1)
-                        this.AddNewItem(p_Item);
+                    item.Value.Amount++;
+                    this.GotItem(item.Value);
+                    return;
                 }
+        
+            this.AddNewItem(p_Item);
+        }
     }
 
     public void AddNewItem(Item p_Item)
     {
         if (p_Item != null)
-            for (int i = 0; i < this._Items.GetLength(0); i++)
-                for (int j = 0; j < this._Items.GetLength(1); j++)
-                    if (this._Items[i, j] == null)
-                    {
-                        this._Items[i, j] = p_Item;
-                        this.SetItemToSlot(this._Items[i, j], new Vector2(i, j));
-                        return;
-                    }
+            foreach (var item in this._Slots)
+                if (item.Value == null)
+                {
+                    this._Slots[item.Key] = p_Item;
+                    this._Slots.Where(s => s.Value == p_Item).FirstOrDefault().Key.GetComponent<Slot>().MyItem = p_Item;
+                    this.GotItem(p_Item);
+                    return;
+                }
     }
-
-    private void SetItemToSlot(Item p_Item, Vector2 p_Coord)
-    {
-        GameObject slot = GameObject.FindGameObjectsWithTag("Slot").First(s => s.name == String.Format("slot_{0}_{1}", p_Coord.y, p_Coord.x));
-
-        if (slot != null)
-        {
-            slot.GetComponent<Slot>().MyItem = p_Item;
-            this.GotItem(p_Item);
-        }
-    }
-
+    
     public void RemoveItem(Item p_Item)
     {
         // TODO implement RemoveItem
