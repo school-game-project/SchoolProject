@@ -31,14 +31,12 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        ((ActionDetecter)GameObject.FindWithTag("Player").GetComponent<ActionDetecter>()).MineFinished += this.GettingItem;
+        ((ActionDetecter)gameObject.GetComponent<ActionDetecter>()).MineFinished += this.GettingItem;
+        this._Slots = new Dictionary<Slot, Item>((int)(this.InventorySize.x * this.InventorySize.y));
     }
 
     public void AddItem(Item p_Item)
     {
-        if (this._Slots == null)
-            this._Slots = new Dictionary<Slot, Item>((int)(this.InventorySize.x * this.InventorySize.y));
-
         if (p_Item != null)
         {
             foreach (var item in this._Slots)

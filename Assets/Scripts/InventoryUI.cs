@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
     #region Fields & Props
 
     public GameObject Slot;
-    public Vector2 _InventorySize;
     public GameObject contentBox;
     public Transform originalSlot, selectedSlot, selectedItem;
     public int AmountOfSlots;
@@ -22,8 +22,12 @@ public class InventoryUI : MonoBehaviour
     {
         GenerateSlots();
 
-        //InitInventoryBackGround();
-        //InitInventorySlots();
+        GridLayoutGroup grid = this.contentBox.GetComponent<GridLayoutGroup>();
+        Rect rect = this.gameObject.GetComponent<RectTransform>().rect;
+        float sqrtAOS = (float)Math.Sqrt(this.AmountOfSlots);
+        
+        grid.cellSize = new Vector2(rect.width / (sqrtAOS + 2), rect.height / (sqrtAOS + 2));
+        grid.spacing = new Vector2(rect.width / (sqrtAOS * 40), rect.height / (sqrtAOS * 40));
     }
 
     #region Init
@@ -39,11 +43,16 @@ public class InventoryUI : MonoBehaviour
 
     private void GenerateSlots()
     {
-        for (int i = 0; i < AmountOfSlots; i++)
+        Inventory inventory = GameObject.FindWithTag("Player").GetComponent<Inventory>();
+
+        for (int i = 0; i < inventory.InventorySize.x * inventory.InventorySize.y; i++)
         {
             GameObject slot = (GameObject)Instantiate(this.Slot);
             slot.transform.SetParent(contentBox.transform);
         }
+
+        for (int i = 0; i < contentBox.transform.childCount; i++)
+            inventory.Slots.Add(contentBox.transform.GetChild(i).GetComponent<Slot>(), null);
     }
 
     //private void InitInventoryBackGround()
