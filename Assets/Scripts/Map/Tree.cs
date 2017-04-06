@@ -41,7 +41,7 @@ namespace Assets.Scripts.Map
         private void Tree_MineCanceled(GameObject target)
         {
             if (target.tag == "Tree")
-                StopMining();
+                StopMining(target);
         }
 
         private void Tree_MineFinished(GameObject target)
@@ -50,20 +50,21 @@ namespace Assets.Scripts.Map
                 FinishMining(target);
         }
 
-        private void StopMining()
+        private void StopMining(GameObject target)
         {
-            //TODO cancle animations
+            target.GetComponent<AudioSource>().Stop();
         }
 
         private void FinishMining(GameObject target)
         {
+            target.GetComponent<AudioSource>().Stop();
             target.GetComponent<Animator>().SetBool("falling", true);
             Destroy(target, 1.5f);
         }
 
         private void StartMining(GameObject target)
         {
-            //TODO animate stuff
+            target.GetComponent<AudioSource>().Play();
         }
     }
 }
