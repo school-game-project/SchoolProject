@@ -35,6 +35,7 @@ namespace Assets.Scripts.Map
         {
             if (target.tag == "Stone")
             {
+                target.GetComponent<AudioSource>().Stop();
                 FinishMining(target);
             }
         }
@@ -43,7 +44,7 @@ namespace Assets.Scripts.Map
         {
             if (target.tag == "Stone")
             {
-                
+                target.GetComponent<AudioSource>().Stop();
             }
         }
 
@@ -51,7 +52,7 @@ namespace Assets.Scripts.Map
         {
             if (target.tag == "Stone")
             {
-               
+                target.GetComponent<AudioSource>().Play();
             }
         }
 
@@ -63,6 +64,7 @@ namespace Assets.Scripts.Map
         private void FinishMining(GameObject target)
         {
             target.GetComponent<Animator>().SetBool("falling", true);
+            Debug.LogError(target.GetComponent<Animator>().GetBool("falling"));
             Destroy(target, 1.5f);
         }
 
