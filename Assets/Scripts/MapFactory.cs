@@ -24,7 +24,7 @@ public class MapFactory : MonoBehaviour
     public Transform home;
     public int homeSize;
 
-    string savePath = @"C:\test\MapFile.txt";
+    //string savePath = @"C:\test\MapFile.txt";
     int endPosX;
     int endPosZ;
     IMapObject[,] map;
@@ -36,10 +36,10 @@ public class MapFactory : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (!System.IO.File.Exists(savePath))
+        //if (!System.IO.File.Exists(savePath))
             GenerateNewMap();
-        else
-            LoadFromSaveFile();
+        //else
+        //    LoadFromSaveFile();
     }
 
     //TESTING STUFF TO BE REMOVED
@@ -84,7 +84,7 @@ public class MapFactory : MonoBehaviour
 
     private void LoadFromSaveFile() 
     {
-        map = new IMapObject[mapSize, mapSize];
+       /* map = new IMapObject[mapSize, mapSize];
         parent = GameObject.Find("MapFactory");
 
         CreateGround();
@@ -106,12 +106,12 @@ public class MapFactory : MonoBehaviour
         //Objekte aus der SaveFile lesen und erstellen:
         string[] mapStringArray = System.IO.File.ReadAllLines(savePath);
         string mapString = string.Join("", mapStringArray);
-        LoadObjectsFromSaveFile(mapString);
+        LoadObjectsFromSaveFile(mapString);*/
     }
 
     private void LoadObjectsFromSaveFile(string mapString)
     {
-        int counter = 0;
+      /*  int counter = 0;
         string[] objects = mapString.Split(';');
         for (int i = 0; i < mapSize; i++)
         {
@@ -140,12 +140,12 @@ public class MapFactory : MonoBehaviour
                 }
                 counter++;
             }
-        }
+        } */
     }
 
     private void SaveMap()
     {
-        string mapString = "";
+       /* string mapString = "";
 
         for (int i = 0; i < mapSize; i++)
         {
@@ -157,7 +157,7 @@ public class MapFactory : MonoBehaviour
 
         System.IO.StreamWriter writer = System.IO.File.CreateText(savePath);
         writer.WriteLine(mapString);
-        writer.Close();
+        writer.Close(); */
     }
 
     private void CreateGround()
@@ -248,9 +248,9 @@ public class MapFactory : MonoBehaviour
 
                 if (ShouldPlaceObject(x, z))
                 {
-                    Transform placedObj = Instantiate((currPair.Key.GetTransform()), new Vector3((x*distanceScale) + currPair.Key.XOffset, 
+                    GameObject placedObj = Instantiate(currPair.Key.GetTransform().gameObject, new Vector3((x*distanceScale) + currPair.Key.XOffset, 
                         yOffset, (z*distanceScale) + currPair.Key.ZOffset), Quaternion.identity);
-                    placedObj.SetParent(parent.transform);
+                    placedObj.transform.SetParent(parent.transform);
                     
 
                     map[x, z] = currPair.Key;
