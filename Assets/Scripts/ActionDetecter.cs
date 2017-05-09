@@ -8,7 +8,7 @@ public class ActionDetecter : MonoBehaviour {
     bool canTrigger = false;
     GameObject toMine;
     bool blocked = false;
-    double currMineCounter = 0;
+    float minestarted = 0;
     Animation animation;
     
     int mineDuration = 120;
@@ -33,14 +33,14 @@ public class ActionDetecter : MonoBehaviour {
             {
                 MineTriggered(toMine);
                 blocked = true;
-                currMineCounter = 0;
+                minestarted = Time.time;
+
                 this.transform.GetChild(1).gameObject.SetActive(true);
                 animation.Play("orcdamage");
             }
             if (blocked)
             {
-                currMineCounter++;
-                if (currMineCounter >= mineDuration)
+                if (Time.time - minestarted >= 2)
                 {
                     MineFinished(toMine);
                     canTrigger = false;
@@ -59,7 +59,6 @@ public class ActionDetecter : MonoBehaviour {
             {
                 MineCanceled(toMine);
                 blocked = false;
-                currMineCounter = 0;
                 this.transform.GetChild(1).gameObject.SetActive(false);
                 animation.Stop("orcdamage");
                 animation.Play("orcwalk");
