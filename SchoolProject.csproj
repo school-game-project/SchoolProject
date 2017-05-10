@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ClockController.cs" />
     <Compile Include="Assets\GameController.cs" />
     <Compile Include="Assets\Resources\LoadingBars\scripts\scene1.cs" />
     <Compile Include="Assets\Resources\LoadingBars\scripts\scene2.cs" />
