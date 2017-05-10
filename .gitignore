@@ -7,7 +7,8 @@ Temp/*
 Temp
 
 *.vs
-*.unity
 *.csproj
 
 ~*
+
+.DS_Store
