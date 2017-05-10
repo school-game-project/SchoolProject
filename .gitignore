@@ -1,14 +1,13 @@
-Library/
-Library/*
-Library
-
-Temp/
-Temp/*
-Temp
+/[Ll]ibrary/
+/[Tt]emp/
 
 *.vs
 *.csproj
+*.unityproj
 
+# System Files
 ~*
-
 .DS_Store
+
+# Unity3D Generated File On Crash Reports
+sysinfo.txt
