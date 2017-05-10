@@ -7,6 +7,7 @@ using Nature;
 public class GameController : MonoBehaviour
 {
     public DayNightController dayNightController;
+    public Animator MenuAnimations;
 
     private string mapJSON;
     private string timeJSON;
@@ -32,6 +33,27 @@ public class GameController : MonoBehaviour
     public void SetMapJSON(string map)
     {
         mapJSON = map;
+    }
+
+    public void ShowMenu()
+    {
+        MenuAnimations.Play("Menu_Show");
+
+        StartCoroutine(FreezeGame(0.2f));
+    }
+
+    public void HideMenu()
+    {
+        Time.timeScale = 1.0f;
+
+        MenuAnimations.Play("Menu_Hide");
+    }
+
+    private IEnumerator FreezeGame(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        Time.timeScale = 0.0f;
     }
 
 
