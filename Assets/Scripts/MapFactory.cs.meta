@@ -1,10 +1,19 @@
 fileFormatVersion: 2
 guid: 94edbf07d093bf242bf9b7157ab44680
-timeCreated: 1483389144
+timeCreated: 1494524911
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - masterTree: {instanceID: 0}
+  - masterRock: {instanceID: 0}
+  - masterGroundTile: {instanceID: 0}
+  - masterHouse: {instanceID: 0}
+  - player: {instanceID: 0}
+  - wall: {instanceID: 0}
+  - home: {instanceID: 0}
+  - interfaceUI: {fileID: 1332975304624706, guid: ad139a50c9079cb4eba4e0aa5e987c80,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

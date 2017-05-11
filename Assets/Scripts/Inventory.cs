@@ -39,11 +39,11 @@ public class Inventory : MonoBehaviour
     {
         if (p_Item != null)
         {
-            foreach (var item in this._Slots)
-                if (item.Value != null && item.Value.GetType() == p_Item.GetType())
+            foreach (Slot keySlot in this._Slots.Keys)
+                if (this._Slots[keySlot] != null && this._Slots[keySlot].GetType() == p_Item.GetType())
                 {
-                    item.Value.Amount++;
-                    this.GotItem(item.Value);
+                    this._Slots[keySlot].Amount++;
+                    this.GotItem(this._Slots[keySlot]);
                     return;
                 }
         
@@ -54,14 +54,16 @@ public class Inventory : MonoBehaviour
     public void AddNewItem(Item p_Item)
     {
         if (p_Item != null)
-            foreach (var item in this._Slots)
-                if (item.Value == null)
+            foreach (Slot keySlot in this._Slots.Keys)
+            {
+                if (this._Slots[keySlot] == null)
                 {
-                    this._Slots[item.Key] = p_Item;
+                    this._Slots[keySlot] = p_Item;
                     this._Slots.Where(s => s.Value == p_Item).FirstOrDefault().Key.GetComponent<Slot>().MyItem = p_Item;
                     this.GotItem(p_Item);
                     return;
                 }
+            }
     }
     
     public void RemoveItem(Item p_Item)

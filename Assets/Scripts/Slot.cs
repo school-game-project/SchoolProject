@@ -22,7 +22,7 @@ public class Slot : MonoBehaviour//, IPointerEnterHandler, IDragHandler
 
     #region Methods
 
-    public void Start()
+    private void Awake()
     {
         ((Inventory)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(Inventory))).GotItem += AddItem;
     }
