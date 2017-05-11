@@ -15,7 +15,7 @@ public class ClockController : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        //dayNightController.GetActualTime += SetTime;
+        dayNightController.GetActualTime += SetTime;
 	}
 	
 	private void SetTime(int hours, int min)
