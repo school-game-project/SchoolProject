@@ -1,11 +1,15 @@
 fileFormatVersion: 2
 guid: a74f5306b1d7ffa4aa60ccbac19cc293
-timeCreated: 1483394599
+timeCreated: 1494494114
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - Transform1: {fileID: 4751056066693744, guid: bf86e28ba1a617340b1c3d6e82eea335,
+      type: 2}
+  - Transform2: {fileID: 4620099631393882, guid: 62bc07755d6591640a6b8a4597f63608,
+      type: 2}
+  - Transform3: {fileID: 4938648675384892, guid: 37ff9957ae8e3c5498f0a5b8e1034e19,
       type: 2}
   executionOrder: 0
   icon: {instanceID: 0}

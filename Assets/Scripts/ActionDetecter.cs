@@ -10,7 +10,8 @@ public class ActionDetecter : MonoBehaviour {
     bool blocked = false;
     float minestarted = 0;
     Animation animation;
-    
+    Collider targetColl = null;
+
     int mineDuration = 120;
 
     public delegate void MineEventHandler(GameObject target);
@@ -36,7 +37,7 @@ public class ActionDetecter : MonoBehaviour {
                 minestarted = Time.time;
 
                 this.transform.GetChild(1).gameObject.SetActive(true);
-                animation.Play("orcdamage");
+                //animation.Play("orcdamage");
             }
             if (blocked)
             {
@@ -46,10 +47,15 @@ public class ActionDetecter : MonoBehaviour {
                     canTrigger = false;
                     blocked = false;
                     toMine = null;
+                    Destroy(targetColl);
+                    targetColl = null;
+
                     this.transform.GetChild(0).gameObject.SetActive(false);
                     this.transform.GetChild(1).gameObject.SetActive(false);
-                    animation.Stop("orcdamage");
-                    animation.Play("orcwalk");
+
+
+                    //animation.Stop("orcdamage");
+                    //animation.Play("orcwalk");
                 }
             }
         }
@@ -60,8 +66,8 @@ public class ActionDetecter : MonoBehaviour {
                 MineCanceled(toMine);
                 blocked = false;
                 this.transform.GetChild(1).gameObject.SetActive(false);
-                animation.Stop("orcdamage");
-                animation.Play("orcwalk");
+                //animation.Stop("orcdamage");
+                //animation.Play("orcwalk");
             }
         }
     }
@@ -70,6 +76,7 @@ public class ActionDetecter : MonoBehaviour {
     {
         if (coll.tag == "Stone" || coll.tag == "Tree")
         {
+            targetColl = coll;
             canTrigger = true;
             toMine = coll.gameObject;
             this.transform.GetChild(0).gameObject.SetActive(true);
@@ -78,12 +85,15 @@ public class ActionDetecter : MonoBehaviour {
 
     private void OnTriggerExit(Collider coll)
     {
-        canTrigger = false;
-        toMine = coll.gameObject;
-        this.transform.GetChild(0).gameObject.SetActive(false);
-        this.transform.GetChild(1).gameObject.SetActive(false);
-        animation.Stop("orcdamage");
-        animation.Play("orcwalk");
+        if (!Input.GetKey(KeyCode.E))
+        { 
+            canTrigger = false;
+            toMine = coll.gameObject;
+            this.transform.GetChild(0).gameObject.SetActive(false);
+            this.transform.GetChild(1).gameObject.SetActive(false);
+            //animation.Stop("orcdamage");
+            //animation.Play("orcwalk");
+        }
     }
 
 }

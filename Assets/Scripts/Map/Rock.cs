@@ -9,6 +9,8 @@ namespace Assets.Scripts.Map
     public class Rock : MonoBehaviour, IMapObject
     {
         public Transform Transform1;
+        public Transform Transform2;
+        public Transform Transform3;
 
         public bool IsObstacle { get { return true; } }
         public float XOffset { get { return xOffset; } set { xOffset = value; } }
@@ -21,7 +23,17 @@ namespace Assets.Scripts.Map
         public Transform GetTransform()
         {
             //TODO maybe add some randomisation
-            return Transform1;
+            switch (UnityEngine.Random.Range(0, 3))
+            {
+                case 0:
+                    return Transform1;
+                case 1:
+                    return Transform2;
+                case 2:
+                    return Transform3;
+                default:
+                    return null;
+            }
         }
 
         private void Start()
@@ -63,7 +75,8 @@ namespace Assets.Scripts.Map
         private void FinishMining(GameObject target)
         {
             target.GetComponent<AudioSource>().Stop();
-            target.GetComponent<Animator>().SetBool("falling", true);
+            Animator x = target.GetComponent<Animator>();
+            x.SetBool("falling", true);
             Destroy(target, 1.5f);
         }
 
