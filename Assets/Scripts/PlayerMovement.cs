@@ -5,12 +5,14 @@ public class PlayerMovement : MonoBehaviour
 {
     public float movespeed;
 
+    private bool singleplay;
     private Rigidbody rb;
     private bool walking;
 
 
     private void Start()
     {
+        this.singleplay = false;
         rb = GetComponent<Rigidbody>();
     }
 
@@ -27,20 +29,33 @@ public class PlayerMovement : MonoBehaviour
             walking = false;
         }
 
+		AudioSource audio = GetComponent<AudioSource>();
         if(walking == true)
-        {
-            GetComponent<Animation>().Play("orcwalk");
+		{
+			GetComponent<Animation>().Play("orcwalk");
+
+            if (singleplay == false)
+            {
+                audio.Play();
+                singleplay = true;
+            }
         }
         else
-        {
-            GetComponent<Animation>().Play("orcattack");
+		{
+			GetComponent<Animation>().Play("orcattack");
+            if (singleplay == true)
+            {
+                audio.Stop();
+                singleplay = false;
+            }
         }
     }
 
 
     private void Move()
     {
-        if (Input.GetKey(KeyCode.W))
+
+		if (Input.GetKey(KeyCode.W))
         {
             walking = true;
             rb.velocity = transform.forward * movespeed;
