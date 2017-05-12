@@ -16,8 +16,9 @@ script:
 deploy:
   provider: releases
   api_key: "$token"
-  file:
-   - "~/build/school-game-project/SchoolProject/Build/linux/SchoolGameProject.exe""
+  file: "~/build/school-game-project/SchoolProject/Build/linux/SchoolGameProject.exe"
   skip_cleanup: true
 #  on:
 #    tags: true
+                                                                                                                                                                                                            
+
