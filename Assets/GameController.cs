@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     public DayNightController dayNightController;
     public Animator MenuAnimations;
+    public GameObject Menu;
 
     private string mapJSON;
     private string timeJSON;
@@ -37,6 +38,8 @@ public class GameController : MonoBehaviour
 
     public void ShowMenu()
     {
+        Menu.SetActive(true);
+
         MenuAnimations.Play("Menu_Show");
 
         StartCoroutine(FreezeGame(0.2f));
@@ -47,6 +50,8 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1.0f;
 
         MenuAnimations.Play("Menu_Hide");
+
+        Menu.SetActive(false);
     }
 
     private IEnumerator FreezeGame(float waitTime)
