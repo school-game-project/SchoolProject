@@ -7,7 +7,7 @@ using Nature;
 
 public class ClockController : MonoBehaviour {
 
-    public DayNightController dayNightController;
+    private DayNightController dayNightController;
 
     public Text hoursText;
     public Text minText;
@@ -15,6 +15,8 @@ public class ClockController : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        dayNightController = GameObject.FindWithTag("DayNight").GetComponent<DayNightController>();
+
         dayNightController.GetActualTime += SetTime;
 	}
 	

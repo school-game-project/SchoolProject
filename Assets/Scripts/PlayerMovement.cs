@@ -88,6 +88,6 @@ public class PlayerMovement : MonoBehaviour
             Compass.transform.eulerAngles += new Vector3(0, 0, 3);
         }
 
-        Debug.Log(transform.rotation.y);
+        //Debug.Log(transform.rotation.y);
     }
 }

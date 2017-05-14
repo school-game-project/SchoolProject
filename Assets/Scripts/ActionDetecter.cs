@@ -5,6 +5,8 @@ using Assets.Scripts.Map;
 
 public class ActionDetecter : MonoBehaviour {
 
+    public GameObject workDoneAnimation;
+
     bool canTrigger = false;
     GameObject toMine;
     bool blocked = false;
@@ -43,6 +45,13 @@ public class ActionDetecter : MonoBehaviour {
             {
                 if (Time.time - minestarted >= 2)
                 {
+
+                    Vector3 workDonePosition = new Vector3();
+                    workDonePosition = targetColl.transform.position + workDoneAnimation.transform.position;
+
+                    GameObject workDone = Instantiate(workDoneAnimation, workDonePosition, Quaternion.identity) as GameObject;
+                    Destroy(workDone, 1.0f);
+
                     MineFinished(toMine);
                     canTrigger = false;
                     blocked = false;
