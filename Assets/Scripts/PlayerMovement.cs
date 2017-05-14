@@ -4,14 +4,17 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     public float movespeed;
-
+    
     private bool singleplay;
     private Rigidbody rb;
     private bool walking;
 
+    private GameObject Compass;
+
 
     private void Start()
     {
+        Compass = GameObject.FindWithTag("Compass");
         this.singleplay = false;
         rb = GetComponent<Rigidbody>();
     }
@@ -77,10 +80,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             transform.eulerAngles -= new Vector3(0, 3, 0);
+            Compass.transform.eulerAngles -= new Vector3(0, 0, 3);
         }
         else if (Input.GetKey(KeyCode.D))
         {
             transform.eulerAngles += new Vector3(0, 3, 0);
+            Compass.transform.eulerAngles += new Vector3(0, 0, 3);
         }
 
         Debug.Log(transform.rotation.y);
