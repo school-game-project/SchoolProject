@@ -11,6 +11,8 @@ install:
 - ./Scripts/install.sh
 script:
 - ./Scripts/build.sh || true
+- ls -lah
+- ls -lah build/
 
 deploy:
   provider: releases

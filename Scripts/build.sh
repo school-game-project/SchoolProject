@@ -13,7 +13,7 @@ echo "Attempting to build $project for Windows"
   -logFile $(pwd)/unity.log \
   -executeMethod Build.Perform \
   -projectPath $(pwd) \
-  -buildWindowsPlayer "$(pwd)/Build/windows/$project.exe" \
+  -buildWindowsPlayer "build/$project.exe" \
   -quit
 
 echo "Attempting to build $project for OS X"
@@ -24,7 +24,7 @@ echo "Attempting to build $project for OS X"
   -logFile $(pwd)/unity.log \
   -executeMethod Build.Perform \
   -projectPath $(pwd) \
-  -buildOSXUniversalPlayer "$(pwd)/Build/osx/$project.app" \
+  -buildOSXUniversalPlayer "build/$project.app" \
   -quit
 
 #echo "Attempting to build $project for Linux"
