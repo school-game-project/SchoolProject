@@ -23,8 +23,6 @@ public class MapFactory : MonoBehaviour
     public Transform wall;
     public Transform home;
     public int homeSize;
-    public GameObject interfaceUI;
-    public GameObject interfaceClone;
 
     //string savePath = @"C:\test\MapFile.txt";
     int endPosX;
@@ -80,9 +78,6 @@ public class MapFactory : MonoBehaviour
         }
         // Spieler erstellen:
         Instantiate(player, new Vector3(spawnPosX * distanceScale, 1, spawnPosZ * distanceScale), Quaternion.identity);
-
-        // Interface erstellen
-        Instantiate(interfaceUI);
         
         CreateLayout();
     }

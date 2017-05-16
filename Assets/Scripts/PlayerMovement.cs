@@ -44,9 +44,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //checks on running and reduce stamina if active or increase it when player isnt running
-        if (running && stamina >= staminaLostPerFrame)
+        if (running && stamina >= 0)
         {
-            stamina -= staminaLostPerFrame;
+            stamina -= staminaLostPerFrame * Time.deltaTime;
             stamina = Mathf.Clamp(stamina, 0, maxStamina);
 
             if(OnStaminaChanged != null)
@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (stamina < maxStamina)
             {
-                stamina += staminaLostPerFrame / 10;
+                stamina += staminaLostPerFrame / 15 * Time.deltaTime;
                 stamina = Mathf.Clamp(stamina, 0, maxStamina);
 
                 if(OnStaminaChanged != null)

@@ -7,31 +7,45 @@ using Nature;
 public class GameController : MonoBehaviour
 {
     public DayNightController dayNightController;
+    public CountDownController countdownController;
     public Animator MenuAnimations;
     public GameObject Menu;
-    public InventoryUI InterfaceClone;
+    public InventoryUI InventoryClone;
+    public GameObject Interface;
 
     private string mapJSON;
     private string timeJSON;
 
-
     private void Start()
     {
+        
         dayNightController.GetActualTime += SetTimeJson;
         LoadData();
+        
         dayNightController.StartTime(timeJSON);
+
+        Instantiate(Interface);
+
+        countdownController = GameObject.FindWithTag("CountDown").GetComponent<CountDownController>();
+        countdownController.StartCountDown();
+        countdownController.OnCountdownOver += OnCountDownDone;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
-            this.InterfaceClone.SetShowingThis();
+            this.InventoryClone.SetShowingThis();
     }
 
     private void OnApplicationQuit()
     {
         SaveData();
         PlayerPrefs.Save();
+    }
+
+    private void OnCountDownDone(bool won)
+    {
+
     }
 
     public void SetTimeJson(int hours, int min)

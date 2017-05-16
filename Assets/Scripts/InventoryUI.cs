@@ -20,6 +20,8 @@ public class InventoryUI : MonoBehaviour
 
     private void Start()
     {
+        GameObject.FindWithTag("GameController").GetComponent<GameController>().InventoryClone = this;
+        
         this.GenerateSlots();
 
         GridLayoutGroup grid = this.contentBox.GetComponent<GridLayoutGroup>();
@@ -28,8 +30,6 @@ public class InventoryUI : MonoBehaviour
         
         grid.cellSize = new Vector2(rect.width / (sqrtAOS + 2), rect.height / (sqrtAOS + 2));
         grid.spacing = new Vector2(rect.width / (sqrtAOS * 40), rect.height / (sqrtAOS * 40));
-
-        GameObject.FindWithTag("GameController").GetComponent<GameController>().InterfaceClone = this;
 
         this.SetShowingThis();
     }
@@ -54,9 +54,13 @@ public class InventoryUI : MonoBehaviour
             GameObject slot = (GameObject)Instantiate(this.Slot);
             slot.transform.SetParent(contentBox.transform);
         }
-
+        
         for (int i = 0; i < contentBox.transform.childCount; i++)
-            inventory.Slots.Add(contentBox.transform.GetChild(i).GetComponent<Slot>(), null);
+        {
+            
+            //inventory.Slots.Add(contentBox.transform.GetChild(i).GetComponent<Slot>(), null);
+        }
+            
     }
 
     //private void InitInventoryBackGround()
