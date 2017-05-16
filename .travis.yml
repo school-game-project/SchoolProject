@@ -8,7 +8,6 @@ before_install:
  - chmod +x Scripts/install.sh
  - chmod +x Scripts/build.sh
 install:
-- echo $(pwd)
 - ./Scripts/install.sh
 script:
 - ./Scripts/build.sh || true
@@ -16,7 +15,7 @@ script:
 deploy:
   provider: releases
   api_key: "$token"
-  file: "~/build/school-game-project/SchoolProject/Build/linux/SchoolGameProject.exe"
+  file: "./Build/linux/SchoolGameProject.exe"
   skip_cleanup: true
 #  on:
 #    tags: true
