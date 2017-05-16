@@ -24,6 +24,7 @@ public class MapFactory : MonoBehaviour
     public Transform home;
     public int homeSize;
     public GameObject interfaceUI;
+    public GameObject interfaceClone;
 
     //string savePath = @"C:\test\MapFile.txt";
     int endPosX;
@@ -82,7 +83,7 @@ public class MapFactory : MonoBehaviour
 
         // Interface erstellen
         Instantiate(interfaceUI);
-
+        
         CreateLayout();
     }
 

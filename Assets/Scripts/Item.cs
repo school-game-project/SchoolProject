@@ -35,7 +35,7 @@ public class Item : MonoBehaviour
 
     public virtual void Start()
     {
-        this._Amount = 1;
+        this._Amount = UnityEngine.Random.Range(1, 4);
     }
 
     #endregion // Methods

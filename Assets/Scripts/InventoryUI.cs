@@ -29,9 +29,11 @@ public class InventoryUI : MonoBehaviour
         grid.cellSize = new Vector2(rect.width / (sqrtAOS + 2), rect.height / (sqrtAOS + 2));
         grid.spacing = new Vector2(rect.width / (sqrtAOS * 40), rect.height / (sqrtAOS * 40));
 
+        GameObject.FindWithTag("GameController").GetComponent<GameController>().InterfaceClone = this;
+
         this.SetShowingThis();
     }
-
+    
     #region Init
 
     public void SetShowingThis()

@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public DayNightController dayNightController;
     public Animator MenuAnimations;
     public GameObject Menu;
+    public InventoryUI InterfaceClone;
 
     private string mapJSON;
     private string timeJSON;
@@ -19,6 +20,12 @@ public class GameController : MonoBehaviour
         dayNightController.GetActualTime += SetTimeJson;
         LoadData();
         dayNightController.StartTime(timeJSON);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+            this.InterfaceClone.SetShowingThis();
     }
 
     private void OnApplicationQuit()
