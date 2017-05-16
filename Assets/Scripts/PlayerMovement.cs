@@ -4,12 +4,20 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
     public float movespeed;
-    
+    public float speedMultiplicator;
+    public float stamina;
+    public float staminaLostPerFrame;
+    public float maxStamina;
+
     private bool singleplay;
     private Rigidbody rb;
     private bool walking;
+    private bool running;
 
     private GameObject Compass;
+
+    public delegate void StaminaChanged();
+    public event StaminaChanged OnStaminaChanged;
 
 
     private void Start()
@@ -17,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
         Compass = GameObject.FindWithTag("Compass");
         this.singleplay = false;
         rb = GetComponent<Rigidbody>();
+
+        stamina = maxStamina;
     }
 
     private void Update()
@@ -30,9 +40,31 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             walking = false;
+            running = false;
         }
 
-		AudioSource audio = GetComponent<AudioSource>();
+        //checks on running and reduce stamina if active or increase it when player isnt running
+        if (running && stamina >= staminaLostPerFrame)
+        {
+            stamina -= staminaLostPerFrame;
+            stamina = Mathf.Clamp(stamina, 0, maxStamina);
+
+            if(OnStaminaChanged != null)
+                OnStaminaChanged();
+        }
+        else
+        {
+            if (stamina < maxStamina)
+            {
+                stamina += staminaLostPerFrame / 10;
+                stamina = Mathf.Clamp(stamina, 0, maxStamina);
+
+                if(OnStaminaChanged != null)
+                    OnStaminaChanged();
+            }
+        }
+
+        AudioSource audio = GetComponent<AudioSource>();
         if(walking == true)
 		{
 			GetComponent<Animation>().Play("orcwalk");
@@ -57,20 +89,37 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
+        float multiplicator;
 
-		if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.LeftShift) && stamina >= staminaLostPerFrame)
+        {
+            multiplicator = speedMultiplicator;
+        }
+        else
+        {
+            multiplicator = 1;
+            running = false;
+        }
+
+
+        if (Input.GetKey(KeyCode.W))
         {
             walking = true;
-            rb.velocity = transform.forward * movespeed;
+            rb.velocity = (transform.forward * movespeed) * multiplicator;
         }
         else if (Input.GetKey(KeyCode.S))
         {
             walking = true;
-            rb.velocity = transform.forward * -movespeed;
+            rb.velocity = (transform.forward * -movespeed) * multiplicator;
         }
         else
         {
             walking = false;
+        }
+
+        if (walking && multiplicator != 1)
+        {
+            running = true;
         }
     }
 
