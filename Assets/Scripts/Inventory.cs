@@ -29,7 +29,7 @@ public class Inventory : MonoBehaviour
 
     #region Methods
 
-    void Start()
+    private void Awake()
     {
         ((ActionDetecter)gameObject.GetComponent<ActionDetecter>()).MineFinished += this.GettingItem;
         this._Slots = new Dictionary<Slot, Item>((int)(this.InventorySize.x * this.InventorySize.y));
@@ -42,7 +42,7 @@ public class Inventory : MonoBehaviour
             foreach (Slot keySlot in this._Slots.Keys)
                 if (this._Slots[keySlot] != null && this._Slots[keySlot].GetType() == p_Item.GetType())
                 {
-                    this._Slots[keySlot].Amount++;
+                    this._Slots[keySlot].Amount += UnityEngine.Random.Range(1, 4);
                     this.GotItem(this._Slots[keySlot]);
                     return;
                 }

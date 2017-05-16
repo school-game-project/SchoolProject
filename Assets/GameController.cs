@@ -18,7 +18,6 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        
         dayNightController.GetActualTime += SetTimeJson;
         LoadData();
         
