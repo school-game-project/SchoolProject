@@ -9,18 +9,23 @@ public class Inventory : MonoBehaviour
 {
     #region Fields & Props
 
-    private Item[,] _Items;
-    public Item[,] Items
+    private int _Gold;
+    public int Gold
     {
-        get { return _Items; }
-        set { _Items = value; }
+        get { return _Gold; }
+        private set { _Gold = value; }
     }
-
+    
     private Dictionary<Slot, Item> _Slots;
     public Dictionary<Slot, Item> Slots
     {
         get { return _Slots; }
         set { _Slots = value; }
+    }
+
+    private int RandomNumber
+    {
+        get { return UnityEngine.Random.Range(1, 4); }
     }
 
     public Vector2 InventorySize;
@@ -42,7 +47,8 @@ public class Inventory : MonoBehaviour
             foreach (Slot keySlot in this._Slots.Keys)
                 if (this._Slots[keySlot] != null && this._Slots[keySlot].GetType() == p_Item.GetType())
                 {
-                    this._Slots[keySlot].Amount += UnityEngine.Random.Range(1, 4);
+                    this._Gold += this.RandomNumber;
+                    this._Slots[keySlot].Amount += this.RandomNumber;
                     this.GotItem(this._Slots[keySlot]);
                     return;
                 }
@@ -58,6 +64,7 @@ public class Inventory : MonoBehaviour
             {
                 if (this._Slots[keySlot] == null)
                 {
+                    this._Gold += this.RandomNumber;
                     this._Slots[keySlot] = p_Item;
                     this._Slots.Where(s => s.Value == p_Item).FirstOrDefault().Key.GetComponent<Slot>().MyItem = p_Item;
                     this.GotItem(p_Item);
