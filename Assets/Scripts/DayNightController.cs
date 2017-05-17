@@ -32,6 +32,16 @@ namespace Nature
 
         private void SetSunFlare(int hours, int min)
         {
+            if(hours > 18 || hours < 6)
+            {
+                this.GetComponent<Light>().intensity -= 0.01f;
+            }
+            else
+            {
+                if (this.GetComponent<Light>().intensity < 1.0f)
+                    this.GetComponent<Light>().intensity += 0.01f;
+            }
+
             transform.eulerAngles = new Vector3(-60 + (hours * 11.5f) + (min * 0.1916f), 0, 0);
         }
 
