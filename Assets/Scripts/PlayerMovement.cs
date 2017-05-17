@@ -44,10 +44,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //checks on running and reduce stamina if active or increase it when player isnt running
-        if (running && stamina >= 0)
+        if (running && stamina > 0.0f)
         {
             stamina -= staminaLostPerFrame * Time.deltaTime;
-            stamina = Mathf.Clamp(stamina, 0, maxStamina);
+            stamina = Mathf.Clamp(stamina, -1.0f, maxStamina);
 
             if(OnStaminaChanged != null)
                 OnStaminaChanged();
@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float multiplicator;
 
-        if (Input.GetKey(KeyCode.LeftShift) && stamina >= staminaLostPerFrame)
+        if (Input.GetKey(KeyCode.LeftShift) && stamina >= 0.0f)
         {
             multiplicator = speedMultiplicator;
         }
