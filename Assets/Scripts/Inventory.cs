@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using System.Reflection;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -74,7 +75,7 @@ public class Inventory : MonoBehaviour
 
                     if (this.GotNewItemsToShow != null)
                         this.GotNewItemsToShow(temp);
-                    
+
                     this.GotItem(this._Slots[keySlot]);
                     return;
                 }
