@@ -41,12 +41,12 @@ public class Inventory : MonoBehaviour
 
     private bool HasWoodGold
     {
-        get { return UnityEngine.Random.Range(1, 11) == 1 ? true : false; }
+        get { return UnityEngine.Random.Range(1, 11) == 1; }
     }
 
     private bool HasStoneGold
     {
-        get { return UnityEngine.Random.Range(1, 6) == 1 ? true : false; }
+        get { return UnityEngine.Random.Range(1, 6) == 1; }
     }
 
     public Vector2 InventorySize;
