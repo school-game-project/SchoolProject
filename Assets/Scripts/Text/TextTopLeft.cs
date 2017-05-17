@@ -11,9 +11,9 @@ abstract public class TextTopLeft : TextItem
         this.boxPosition = GameObject.FindWithTag("TextTopLeft");
     }
 
-    override protected Text GetTextElement(){
+    /*override protected Text GetTextElement(){
         return this.boxPosition.transform.GetChild(1).transform.GetChild(0).GetComponent<Text>();
-    }
+    }*/
 
 
 }

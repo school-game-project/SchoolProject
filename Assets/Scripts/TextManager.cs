@@ -6,12 +6,26 @@ public enum TextToPlay {StoryStart, StoryWon, StoryLost, TutorialAtStart, Tutori
 
 public class TextManager : MonoBehaviour
 {
-    private TextItem activeTextPassage;
+    public TextItem activeTextPassage;
 
+    private StoryStart storyStartDataClass;
 
 	void Start()
 	{
-		this.activeTextPassage = new StoryStart();
+
+        storyStartDataClass = new StoryStart();
+
+        /*
+		LES MICH!
+
+            Wenn du Monobehaviour vererbst dann kannst du das nicht mit New initiliesieren
+            das musst du dann an ein GameObject(beispiel dein Text) damit es sozusagen ein Objekt wird
+            
+
+            versuch mal erstmal nicht diese kranke vererbung
+            mach es einfach mal richtig basic
+        */
+
 	}
 
     public void play(TextToPlay texttype){

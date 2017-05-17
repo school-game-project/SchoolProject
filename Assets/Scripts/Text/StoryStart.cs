@@ -3,15 +3,17 @@ using UnityEditor;
 using UnityEngine;
 
 
-public class StoryStart : TextTopLeft
+public class StoryStart
 {
+    private string text;
 
-    public StoryStart():base()
+    public string Text
     {
-        this.text.Add("Es war ein mal vor langer langer zeit");
-        this.text.Add("Als sich so ein Orc verirrte");
-        this.text.Add("Ende");
-        Debug.Log("asf");
-    }
+        get { return this.text; }
+        private set { this.text = "Hier der Start TExt"; }
+    } 
+
+
+    
 
 }

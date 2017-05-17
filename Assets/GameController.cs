@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
         dayNightController.StartTime(timeJSON);
 
         Instantiate(Interface);
+        
 
         countdownController = GameObject.FindWithTag("CountDown").GetComponent<CountDownController>();
         countdownController.StartCountDown();
