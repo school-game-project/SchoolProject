@@ -12,14 +12,15 @@ install:
 script:
 - ./Scripts/build.sh || true
 - ls -lah
-- ls -lah build/
+- ls -lah ../
 
 deploy:
   provider: releases
   api_key: "$token"
   file: "./Build/linux/SchoolGameProject.exe"
   skip_cleanup: true
-#  on:
+  on:
+    branch: stefan-debug
 #    tags: true
                                                                                                                                                                                                             
 

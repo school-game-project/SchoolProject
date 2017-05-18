@@ -1,10 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TextManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ActionDetecter.cs">
     <Files>
-      <File FileName="Assets/Scripts/TextManager.cs" Line="19" Column="45" />
-      <File FileName="Assets/Scripts/Text/TextItem.cs" Line="13" Column="5" />
-      <File FileName="Assets/Scripts/Text/TextTopLeft.cs" Line="16" Column="6" />
-      <File FileName="Assets/Scripts/Text/StoryStart.cs" Line="7" Column="2" />
+      <File FileName="Assets/Scripts/TextManager.cs" Line="36" Column="5" />
+      <File FileName="Assets/Scripts/Text/TextElement.cs" Line="45" Column="68" />
+      <File FileName="Assets/Scripts/Text/TextItem.cs" Line="10" Column="30" />
+      <File FileName="Assets/Scripts/Text/storyStart.json" Line="8" Column="2" />
+      <File FileName="Assets/Scripts/ActionDetecter.cs" Line="61" Column="21" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
@@ -13,4 +14,5 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.SchoolProject PreferredExecutionTarget="Unity.Editor" />
 </Properties>

@@ -2,69 +2,40 @@
 using UnityEngine;
 
 
-public enum TextToPlay {StoryStart, StoryWon, StoryLost, TutorialAtStart, TutorialCamp, TutorialShipyard}
+public enum TextToPlay { StoryStart, StoryWon, StoryLost, TutorialAtStart, TutorialCamp, TutorialShipyard };
 
 public class TextManager : MonoBehaviour
 {
     public TextItem activeTextPassage;
-
-    private StoryStart storyStartDataClass;
-
-	void Start()
-	{
-
-        storyStartDataClass = new StoryStart();
-
-        /*
-		LES MICH!
-
-            Wenn du Monobehaviour vererbst dann kannst du das nicht mit New initiliesieren
-            das musst du dann an ein GameObject(beispiel dein Text) damit es sozusagen ein Objekt wird
-            
-
-            versuch mal erstmal nicht diese kranke vererbung
-            mach es einfach mal richtig basic
-        */
-
-	}
+    public TextElement TextElement;
 
     public void play(TextToPlay texttype){
+        string text = "";
 
-        switch (texttype) {
+        switch(texttype){
 
             case TextToPlay.StoryStart:
-                
+                text = getFileContent("Assets/Scripts/Text/storyStart.json");
             break;
-
-            case TextToPlay.StoryWon:
-                
-            break;
-
-
-			case TextToPlay.StoryLost:
-
-			break;
-
-
-			case TextToPlay.TutorialAtStart:
-
-			break;
-
-
-			case TextToPlay.TutorialCamp:
-
-			break;
-
-            case TextToPlay.TutorialShipyard:
-                
-            break;
-
         }
+
+		TextItem TextContainer = JsonUtility.FromJson<TextItem>(text);
+        this.TextElement.StartDisplayText(TextContainer);
     }
 
     public void ClickEvent(){
-        this.activeTextPassage.StartDisplay();
+        this.play(TextToPlay.StoryStart);
     }
+
+	public string getFileContent(string Path)
+	{
+		string text = System.IO.File.ReadAllText(@Path);
+        return text;
+    }
+
+
+
+
 
 
 }

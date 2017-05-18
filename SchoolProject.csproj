@@ -111,7 +111,6 @@
     <Compile Include="Assets\Scripts\PlayerMovementTest.cs" />
     <Compile Include="Assets\Scripts\Slot.cs" />
     <Compile Include="Assets\Scripts\Stone.cs" />
-    <Compile Include="Assets\Scripts\Text\Interface.cs" />
     <Compile Include="Assets\Scripts\Text\StoryStart.cs" />
     <Compile Include="Assets\Scripts\Text\TextItem.cs" />
     <Compile Include="Assets\Scripts\Text\TextTopLeft.cs" />
