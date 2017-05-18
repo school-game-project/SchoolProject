@@ -13,7 +13,6 @@ public class ActionDetecter : MonoBehaviour {
     float minestarted = 0;
     Animation animation;
     Collider targetColl = null;
-
     int mineDuration = 120;
 
     public delegate void MineEventHandler(GameObject target);
@@ -21,6 +20,8 @@ public class ActionDetecter : MonoBehaviour {
     public event MineEventHandler MineTriggered;
     public event MineEventHandler MineCanceled;
     public event MineEventHandler MineFinished;
+    public event MineEventHandler HighlightObject;
+    public event MineEventHandler UnHighlightObject;
 
     private void Start()
     {
@@ -88,6 +89,8 @@ public class ActionDetecter : MonoBehaviour {
             targetColl = coll;
             canTrigger = true;
             toMine = coll.gameObject;
+            HighlightObject(toMine);
+
             this.transform.GetChild(0).gameObject.SetActive(true);
         }
     }
@@ -98,6 +101,9 @@ public class ActionDetecter : MonoBehaviour {
         { 
             canTrigger = false;
             toMine = coll.gameObject;
+
+            UnHighlightObject(toMine);
+
             this.transform.GetChild(0).gameObject.SetActive(false);
             this.transform.GetChild(1).gameObject.SetActive(false);
             //animation.Stop("orcdamage");
