@@ -52,7 +52,7 @@ namespace Assets.Scripts.Map
 
         private void Tree_UnHighlightObject(GameObject target)
         {
-            if (target.tag == "Tree" || target.tag == "Stone"   )
+            if (target.tag == "Tree")
             {
                 if (matDic.ContainsKey(target))
                 {
@@ -64,7 +64,7 @@ namespace Assets.Scripts.Map
 
         private void Tree_HighlightObject(GameObject target)
         {
-            if (target.tag == "Tree" || target.tag == "Stone")
+            if (target.tag == "Tree")
             {
                 //Alle alten Elemente zurücksetzen
                 foreach (GameObject currTarget in matDic.Keys)

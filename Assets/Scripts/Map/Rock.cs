@@ -11,7 +11,8 @@ namespace Assets.Scripts.Map
         public Transform Transform1;
         public Transform Transform2;
         public Transform Transform3;
-
+        public Material highlightMat;
+        
         public bool IsObstacle { get { return true; } }
         public float XOffset { get { return xOffset; } set { xOffset = value; } }
         public float ZOffset { get { return zOffset; } set { zOffset = value; } }
@@ -19,6 +20,7 @@ namespace Assets.Scripts.Map
 
         private float xOffset = -0.75f;
         private float zOffset = -0.75f;
+        Dictionary<GameObject, Material[]> matDic;
 
         public Transform GetTransform()
         {
@@ -41,6 +43,53 @@ namespace Assets.Scripts.Map
             ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineTriggered += Rock_MineTriggered;
             ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineCanceled += Rock_MineCanceled;
             ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineFinished += Rock_MineFinished;
+            ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).HighlightObject += Rock_HighlightObject;
+            ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).UnHighlightObject += Rock_UnHighlightObject;
+            matDic = new Dictionary<GameObject, Material[]>();
+        }
+
+        private void Rock_UnHighlightObject(GameObject target)
+        {
+            if (target.tag == "Stone")
+            {
+                if (matDic.ContainsKey(target))
+                {
+                    target.GetComponent<MeshRenderer>().materials = matDic[target];
+                    matDic.Remove(target);
+                }
+            }
+        }
+
+        private void Rock_HighlightObject(GameObject target)
+        {
+            if (target.tag == "Stone")
+            {
+                //Alle alten Elemente zurücksetzen
+                foreach (GameObject currTarget in matDic.Keys)
+                {
+                    if (currTarget != target)
+                    {
+                        if (matDic.ContainsKey(currTarget))
+                        {
+                            currTarget.GetComponent<MeshRenderer>().materials = matDic[target];
+                            matDic.Remove(currTarget);
+                        }
+                    }
+                }
+
+                //Highlighten
+                Material[] originMats = target.GetComponent<MeshRenderer>().materials;
+
+                if (!matDic.ContainsKey(target))
+                    matDic.Add(target, originMats);
+
+                Material[] newMats = new Material[originMats.Length];
+                for (int i = 0; i < newMats.Length; i++)
+                {
+                    newMats[i] = highlightMat;
+                }
+                target.GetComponent<MeshRenderer>().materials = newMats;
+            }
         }
 
         private void Rock_MineFinished(GameObject target)
@@ -77,6 +126,7 @@ namespace Assets.Scripts.Map
             target.GetComponent<AudioSource>().Stop();
             Animator x = target.GetComponent<Animator>();
             x.SetBool("falling", true);
+            matDic.Remove(target);
             Destroy(target, 1.5f);
         }
 
