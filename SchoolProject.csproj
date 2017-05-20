@@ -124,6 +124,7 @@
     <Compile Include="Assets\Scripts\Wood.cs" />
     <Compile Include="Assets\Scripts\movement_test_sphere.cs" />
     <Compile Include="Assets\UpgradeController.cs" />
+    <Compile Include="Assets\UpgradeItem.cs" />
     <Compile Include="Assets\ViewController.cs" />
   </ItemGroup>
   <ItemGroup>
