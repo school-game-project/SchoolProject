@@ -1,8 +1,8 @@
 ﻿{
   "name": "foobar",
   "pages": [
-    "Hallo Welt",
-    "Ich bin eine Page"
+    "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.",
+    "Ich bin eine Page und ich stelle Inhalte dar! glaub ich jedenfalls"
   ]
 
 }

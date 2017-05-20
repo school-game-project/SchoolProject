@@ -11,6 +11,8 @@ namespace Assets.Scripts.Map
         public Transform Transform1;
         public Transform Transform2;
         public Transform Transform3;
+        public Material highlightMat;
+
 
         public bool IsObstacle{ get { return true; } }
         public float XOffset { get { return xOffset; } set { xOffset = value; } }
@@ -19,6 +21,7 @@ namespace Assets.Scripts.Map
 
         private float xOffset = -0.75f;
         private float zOffset = -0.75f;
+        Dictionary<GameObject, Material[]> matDic;
 
         public Transform GetTransform()
         {
@@ -42,6 +45,53 @@ namespace Assets.Scripts.Map
             ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineTriggered += Tree_MineTriggered;
             ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineCanceled += Tree_MineCanceled;
             ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).MineFinished += Tree_MineFinished;
+            ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).HighlightObject += Tree_HighlightObject;
+            ((ActionDetecter)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(ActionDetecter))).UnHighlightObject += Tree_UnHighlightObject;
+            matDic = new Dictionary<GameObject, Material[]>();
+        }
+
+        private void Tree_UnHighlightObject(GameObject target)
+        {
+            if (target.tag == "Tree")
+            {
+                if (matDic.ContainsKey(target))
+                {
+                    target.GetComponent<MeshRenderer>().materials = matDic[target];
+                    matDic.Remove(target);
+                }
+            }
+        }
+
+        private void Tree_HighlightObject(GameObject target)
+        {
+            if (target.tag == "Tree")
+            {
+                //Alle alten Elemente zurücksetzen
+                foreach (GameObject currTarget in matDic.Keys)
+                {
+                    if (currTarget != target)
+                    {
+                        if (matDic.ContainsKey(currTarget))
+                        {
+                            currTarget.GetComponent<MeshRenderer>().materials = matDic[target];
+                            matDic.Remove(currTarget);
+                        }
+                    }
+                }
+
+                //Highlighten
+                Material[] originMats = target.GetComponent<MeshRenderer>().materials;
+
+                if (!matDic.ContainsKey(target))
+                    matDic.Add(target, originMats);
+
+                Material[] newMats = new Material[originMats.Length];
+                for (int i = 0; i < newMats.Length; i++)
+                {
+                    newMats[i] = highlightMat;
+                }
+                target.GetComponent<MeshRenderer>().materials = newMats;
+            }
         }
 
         private void Tree_MineTriggered(GameObject target)
@@ -71,6 +121,7 @@ namespace Assets.Scripts.Map
         {
             target.GetComponent<AudioSource>().Stop();
             target.GetComponent<Animator>().SetBool("falling", true);
+            matDic.Remove(target);
             Destroy(target, 1.5f);
         }
 

@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
         countdownController = GameObject.FindWithTag("CountDown").GetComponent<CountDownController>();
         countdownController.StartCountDown();
         countdownController.OnCountdownOver += OnCountDownDone;
+
     }
 
     private void Update()

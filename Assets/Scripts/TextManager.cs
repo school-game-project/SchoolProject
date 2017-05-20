@@ -15,8 +15,29 @@ public class TextManager : MonoBehaviour
         switch(texttype){
 
             case TextToPlay.StoryStart:
-                text = getFileContent("Assets/Scripts/Text/storyStart.json");
+                text = getFileContent("Assets/Scripts/Text/StoryStart.json");
             break;
+
+            case TextToPlay.StoryWon:
+                text = getFileContent("Assets/Scripts/Text/StoryWon.json");
+            break;
+
+            case TextToPlay.StoryLost:
+                text = getFileContent("Assets/Scripts/Text/StoryLost.json");
+            break;
+                
+            case TextToPlay.TutorialAtStart:
+                text = getFileContent("Assets/Scripts/Text/TutorialAtStart.json");
+            break;
+
+            case TextToPlay.TutorialCamp:
+                text = getFileContent("Assets/Scripts/Text/TutorialCamp.json");
+            break;
+
+            case TextToPlay.TutorialShipyard:
+                text = getFileContent("Assets/Scripts/Text/TutorialShipyard.json");
+            break;
+
         }
 
 		TextItem TextContainer = JsonUtility.FromJson<TextItem>(text);
@@ -24,7 +45,11 @@ public class TextManager : MonoBehaviour
     }
 
     public void ClickEvent(){
-        this.play(TextToPlay.StoryStart);
+        if(this.TextElement.activeText == null){
+            this.play(TextToPlay.StoryStart);
+        }else{
+            this.TextElement.ButtonClick();    
+        }
     }
 
 	public string getFileContent(string Path)
@@ -32,10 +57,5 @@ public class TextManager : MonoBehaviour
 		string text = System.IO.File.ReadAllText(@Path);
         return text;
     }
-
-
-
-
-
 
 }

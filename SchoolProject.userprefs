@@ -1,16 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ActionDetecter.cs">
-    <Files>
-      <File FileName="Assets/Scripts/TextManager.cs" Line="36" Column="5" />
-      <File FileName="Assets/Scripts/Text/TextElement.cs" Line="45" Column="68" />
-      <File FileName="Assets/Scripts/Text/TextItem.cs" Line="10" Column="30" />
-      <File FileName="Assets/Scripts/Text/storyStart.json" Line="8" Column="2" />
-      <File FileName="Assets/Scripts/ActionDetecter.cs" Line="61" Column="21" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/stefan/code/School/SchoolProject/Assets/Scripts/DayNightController.cs" relfile="Assets/Scripts/DayNightController.cs" line="20" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
