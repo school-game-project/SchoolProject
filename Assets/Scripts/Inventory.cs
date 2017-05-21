@@ -161,6 +161,11 @@ public class Inventory : MonoBehaviour
         return temp;
     }
 
+    public void DecreaseGold(int p_Gold)
+    {
+        this.Gold -= p_Gold;
+    }
+
     #endregion // Methods
 
     #region Events & Handler
