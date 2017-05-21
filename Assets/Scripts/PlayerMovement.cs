@@ -19,9 +19,13 @@ public class PlayerMovement : MonoBehaviour
     public delegate void StaminaChanged();
     public event StaminaChanged OnStaminaChanged;
 
+    private UpgradeController UpgradeController;
 
     private void Start()
     {
+        UpgradeController = GameObject.FindWithTag("UpgradeController").GetComponent<UpgradeController>();
+        UpgradeController.OnMoveSpeed += IncreaseMoveSpeed;
+
         Compass = GameObject.FindWithTag("Compass");
         this.singleplay = false;
         rb = GetComponent<Rigidbody>();
@@ -138,5 +142,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Debug.Log(transform.rotation.y);
+    }
+
+    private void IncreaseMoveSpeed()
+    {
+        movespeed *= 0.95f;
     }
 }

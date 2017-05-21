@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class UpgradeController : MonoBehaviour
 {
+    public delegate void UpgradeHandler();
+    public event UpgradeHandler OnChopSpeed;
+    public event UpgradeHandler OnMineSpeed;
+    public event UpgradeHandler OnMoveSpeed;
+
     public List<UpgradeItem> AllUpgradeItems = new List<UpgradeItem>();
 
     private Inventory Inventory;
@@ -36,10 +41,13 @@ public class UpgradeController : MonoBehaviour
             switch (item.Type)
             {
                 case "wood":
+                    OnChopSpeed();
                     break;
                 case "stone":
+                    OnMineSpeed();
                     break;
                 default:
+                    OnMoveSpeed();
                     break;
             }
             item.Costs.text = "" + costs * 2;

@@ -13,7 +13,10 @@ public class ActionDetecter : MonoBehaviour {
     float minestarted = 0;
     Animation animation;
     Collider targetColl = null;
-    int mineDuration = 120;
+    float mineDuration = 120;
+    float chopDuration = 120;
+    float duration = 2;
+
 
     public delegate void MineEventHandler(GameObject target);
 
@@ -23,9 +26,14 @@ public class ActionDetecter : MonoBehaviour {
     public event MineEventHandler HighlightObject;
     public event MineEventHandler UnHighlightObject;
 
+    private UpgradeController UpgradeController;
+
     private void Start()
     {
         animation = ((Animation)this.gameObject.GetComponent("Animation"));
+        UpgradeController = GameObject.FindWithTag("UpgradeController").GetComponent<UpgradeController>();
+        UpgradeController.OnChopSpeed += IncreaseChopSpeed;
+        UpgradeController.OnMineSpeed += IncreaseMineSpeed;
     }
 
     void Update()
@@ -35,6 +43,15 @@ public class ActionDetecter : MonoBehaviour {
             //Event trigger
             if (!blocked && canTrigger)
             {
+                switch(toMine.tag)
+                {
+                    case "Tree":
+                        duration = chopDuration / 60.0f;
+                        break;
+                    case "Rock":
+                        duration = mineDuration / 60.0f;
+                        break;
+                }
                 MineTriggered(toMine);
                 blocked = true;
                 minestarted = Time.time;
@@ -44,7 +61,7 @@ public class ActionDetecter : MonoBehaviour {
             }
             if (blocked)
             {
-                if (Time.time - minestarted >= 2)
+                if (Time.time - minestarted >= duration)
                 {
 
                     Vector3 workDonePosition = new Vector3();
@@ -111,4 +128,13 @@ public class ActionDetecter : MonoBehaviour {
         }
     }
 
+    private void IncreaseChopSpeed()
+    {
+        chopDuration *= 0.95f;
+    }
+
+    private void IncreaseMineSpeed()
+    {
+        mineDuration *= 0.95f;
+    }
 }
