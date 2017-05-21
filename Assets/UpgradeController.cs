@@ -6,7 +6,7 @@ public class UpgradeController : MonoBehaviour
 {
     public List<UpgradeItem> AllUpgradeItems = new List<UpgradeItem>();
 
-    private int gold;
+    private Inventory Inventory;
 
     private void Awake()
     {
@@ -16,21 +16,23 @@ public class UpgradeController : MonoBehaviour
 
             item.Costs.text = "1";
             item.Percent.text = "+" + 5 + "%";
+
+            item.ActivateMe(0);
         }
     }
 
     private void Start()
     {
-        GameObject.FindWithTag("Player").GetComponent<Inventory>().GotNewItemsToShow += AddGold;
+        Inventory = GameObject.FindWithTag("Player").GetComponent<Inventory>();
+        Inventory.GoldChanged += ActivateUpgradeItems;
     }
 
     private void BuyAction(UpgradeItem item)
     {
         int costs = int.Parse(item.Costs.text);
         
-        if (gold >= costs)
+        if (Inventory.Gold >= costs)
         {
-            gold -= costs;
             switch (item.Type)
             {
                 case "wood":
@@ -42,13 +44,18 @@ public class UpgradeController : MonoBehaviour
             }
             item.Costs.text = "" + costs * 2;
             item.Percent.text = "+" + 5 * int.Parse(item.Costs.text) + "%";
-            
+
+
+            Inventory.DecreaseGold(costs);
         }
     }
 
-    private void AddGold(object[] item)
+    private void ActivateUpgradeItems(int gold)
     {
-        this.gold = (int)item[2];
+        foreach (UpgradeItem item in AllUpgradeItems)
+        {
+            item.ActivateMe(gold);
+        }
     }
 
 }
