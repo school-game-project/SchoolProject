@@ -167,7 +167,7 @@ public class Inventory : MonoBehaviour
             this.Gold -= p_Gold;
 
         else
-            this.GoldIsMissing(p_Gold - this.Gold);
+            this.RaiseGoldIsMissing(p_Gold - this.Gold);
     }
 
     #endregion // Methods
