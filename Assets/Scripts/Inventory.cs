@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour
     public int Gold
     {
         get { return _Gold; }
-        private set { _Gold = value; }
+        private set { _Gold = value; this.RaiseGoldChanged(this._Gold); }
     }
     
     private Dictionary<Slot, Item> _Slots;
@@ -70,7 +70,7 @@ public class Inventory : MonoBehaviour
                 {
                     object[] temp = this.GetAmountsOfItem(p_Item);
 
-                    this._Gold += (int)temp[2];
+                    this.Gold += (int)temp[2];
                     this._Slots[keySlot].Amount += (int)temp[1];
 
                     if (this.GotNewItemsToShow != null)
@@ -94,7 +94,7 @@ public class Inventory : MonoBehaviour
                     object[] temp = this.GetAmountsOfItem(p_Item);
 
                     p_Item.Amount = (int)temp[1];
-                    this._Gold += (int)temp[2];
+                    this.Gold += (int)temp[2];
                     this._Slots[keySlot] = p_Item;
                     this._Slots.Where(s => s.Value == p_Item).FirstOrDefault().Key.GetComponent<Slot>().MyItem = p_Item;
 
@@ -167,11 +167,19 @@ public class Inventory : MonoBehaviour
 
     public delegate void ItemEventHandler(Item p_NewItem);
     public delegate void ItemUIEventHandler(object[] p_AmountsOfItems);
-    
+    public delegate void GoldEventHandler(int p_Gold);
+
     public event ItemEventHandler GotItem;
     public event ItemUIEventHandler GotNewItemsToShow;
+    public event GoldEventHandler GoldChanged;
     //public event ItemEventHandler RemovedItem;
-    
+
+    private void RaiseGoldChanged(int p_Gold)
+    {
+        if (this.GoldChanged != null)
+            this.GoldChanged(p_Gold);
+    }
+
     public void GettingItem(GameObject p_ItemHolder)
     {
         string itemHolderName = p_ItemHolder.tag == "Stone" ? "Rock" : p_ItemHolder.tag;
