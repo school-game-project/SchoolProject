@@ -163,7 +163,11 @@ public class Inventory : MonoBehaviour
 
     public void DecreaseGold(int p_Gold)
     {
-        this.Gold -= p_Gold;
+        if (this.Gold >= p_Gold)
+            this.Gold -= p_Gold;
+
+        else
+            this.GoldIsMissing(p_Gold - this.Gold);
     }
 
     #endregion // Methods
@@ -177,12 +181,19 @@ public class Inventory : MonoBehaviour
     public event ItemEventHandler GotItem;
     public event ItemUIEventHandler GotNewItemsToShow;
     public event GoldEventHandler GoldChanged;
+    public event GoldEventHandler GoldIsMissing;
     //public event ItemEventHandler RemovedItem;
 
     private void RaiseGoldChanged(int p_Gold)
     {
         if (this.GoldChanged != null)
             this.GoldChanged(p_Gold);
+    }
+
+    private void RaiseGoldIsMissing(int p_Gold)
+    {
+        if (this.GoldIsMissing != null)
+            this.GoldIsMissing(p_Gold);
     }
 
     public void GettingItem(GameObject p_ItemHolder)
