@@ -25,7 +25,7 @@ public class InventoryUI : MonoBehaviour
         GridLayoutGroup grid = this.contentBox.GetComponent<GridLayoutGroup>();
         Rect rect = this.gameObject.GetComponent<RectTransform>().rect;
         float sqrtAOS = (float)Math.Sqrt(this.AmountOfSlots);
-        
+
         grid.cellSize = new Vector2(rect.width / (sqrtAOS + 2), rect.height / (sqrtAOS + 2));
         grid.spacing = new Vector2(rect.width / (sqrtAOS * 40), rect.height / (sqrtAOS * 40));
 
@@ -34,14 +34,14 @@ public class InventoryUI : MonoBehaviour
 
         this.SetShowingThis();
     }
-    
+
     #region Init
 
     public void SetShowingThis()
     {
         if (this.gameObject.activeSelf)
             this.gameObject.SetActive(false);
-        
+
         else
             this.gameObject.SetActive(true);
     }
@@ -55,7 +55,7 @@ public class InventoryUI : MonoBehaviour
             GameObject slot = (GameObject)Instantiate(this.Slot);
             slot.transform.SetParent(contentBox.transform);
         }
-        
+
         for (int i = 0; i < contentBox.transform.childCount; i++)
             inventory.Slots.Add(contentBox.transform.GetChild(i).GetComponent<Slot>(), null);
     }

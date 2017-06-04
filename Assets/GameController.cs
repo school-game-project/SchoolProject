@@ -21,11 +21,10 @@ public class GameController : MonoBehaviour
     {
         dayNightController.GetActualTime += SetTimeJson;
         LoadData();
-        
+
         dayNightController.StartTime(timeJSON);
 
         Instantiate(Interface);
-        
 
         countdownController = GameObject.FindWithTag("CountDown").GetComponent<CountDownController>();
         countdownController.StartCountDown();
@@ -97,5 +96,5 @@ public class GameController : MonoBehaviour
         PlayerPrefs.SetString("Map", mapJSON);
         PlayerPrefs.SetString("Time", timeJSON);
     }
-	
+
 }
