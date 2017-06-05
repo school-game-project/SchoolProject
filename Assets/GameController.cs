@@ -12,7 +12,6 @@ public class GameController : MonoBehaviour
     public GameObject Menu;
     public InventoryUI InventoryClone;
     public GameObject Interface;
-    public int FelixZahl;
 
     private string mapJSON;
     private string timeJSON;

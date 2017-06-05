@@ -32,6 +32,11 @@ public class UpgradeController : MonoBehaviour
         Inventory.GoldChanged += ActivateUpgradeItems;
     }
 
+    private void Update()
+    {
+       // this.transform.LookAt(Camera.main.transform);
+    }
+
     private void BuyAction(UpgradeItem item)
     {
         int costs = int.Parse(item.Costs.text);
