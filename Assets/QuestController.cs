@@ -41,10 +41,39 @@ public class QuestController : MonoBehaviour
     {
         this.textRessource1.text = this.actualRessource1 + "/" + this.maxRessource1;
         this.textRessource2.text = this.actualRessource2 + "/" + this.maxRessource2;
+
+        if(actualRessource1 < maxRessource1)
+        {
+            this.textRessource1.color = new Color32(255, 0, 0, 255);
+        }
+        else if (actualRessource1 >= maxRessource1)
+        {
+            this.textRessource1.color = new Color32(0, 255, 0, 255);
+        }
+
+        if (actualRessource2 < maxRessource2)
+        {
+            this.textRessource2.color = new Color32(255, 0, 0, 255);
+        }
+        else if(actualRessource2 >= maxRessource2)
+        {
+            this.textRessource2.color = new Color32(0, 255, 0, 255);
+        }
+
     }
 
     private void ItemsFound(object[] Items)
     {
-        Debug.Log("Test");
+        switch(Items[0].ToString())
+        {
+            case "Wood":
+                this.actualRessource1 += (int)Items[1];
+                break;
+            
+            default:
+                this.actualRessource2 += (int)Items[1];
+                break;
+        }
+        SetUpText();
     }
 }
