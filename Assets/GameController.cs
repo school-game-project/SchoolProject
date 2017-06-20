@@ -13,6 +13,12 @@ public class GameController : MonoBehaviour
     public InventoryUI InventoryClone;
     public GameObject Interface;
 
+    public delegate void GCHandler();
+    public event GCHandler OnGameEnd;
+    public event GCHandler OnGameStart;
+    public event GCHandler OnGameWin;
+
+
     private string mapJSON;
     private string timeJSON;
 
@@ -28,6 +34,8 @@ public class GameController : MonoBehaviour
         countdownController = GameObject.FindWithTag("CountDown").GetComponent<CountDownController>();
         countdownController.StartCountDown();
         countdownController.OnCountdownOver += OnCountDownDone;
+
+        OnGameStart();
 
     }
 
@@ -45,7 +53,10 @@ public class GameController : MonoBehaviour
 
     private void OnCountDownDone(bool won)
     {
-
+        if (won)
+            OnGameWin();
+        else
+            OnGameEnd();
     }
 
     public void SetTimeJson(int hours, int min)
