@@ -21,13 +21,8 @@ public class Slot : MonoBehaviour//, IPointerEnterHandler, IDragHandler
     #endregion // Fields & Props
 
     #region Methods
-
-    private void Awake()
-    {
-        ((Inventory)GameObject.Find("PlayerWithCam(Clone)").GetComponent(typeof(Inventory))).GotItem += AddItem;
-    }
-
-    private void AddItem(Item p_Item)
+    
+    public void AddItem(Item p_Item)
     {
         if (this._MyItem != null && this._MyItem.GetType() == p_Item.GetType())
         {
@@ -40,23 +35,6 @@ public class Slot : MonoBehaviour//, IPointerEnterHandler, IDragHandler
             }
         }
     }
-
-    //#region Drag & Drop
-    //
-    //public void OnPointerEnter(PointerEventData eventData)
-    //{
-    //    this.transform.parent.parent.parent.GetComponent<InventoryUI>().selectedSlot = this.transform;
-    //}
-    //
-    //public void OnDrag(PointerEventData eventData)
-    //{
-    //    if (eventData.button == PointerEventData.InputButton.Left)
-    //    {
-    //        this.transform.GetChild(0).position = Input.mousePosition;
-    //    }
-    //}
-    //
-    //#endregion // Drag & Drop
-
+    
     #endregion // Methods
 }

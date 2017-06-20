@@ -20,7 +20,6 @@ public class UpgradeItem : MonoBehaviour
 
     public void ActivateMe(int gold)
     {
-        Debug.Log(gold);
         if(gold >= int.Parse(Costs.text))
         {
             Disabled.SetActive(false);

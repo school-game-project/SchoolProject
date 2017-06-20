@@ -14,7 +14,8 @@ public class Inventory : MonoBehaviour
     public int Gold
     {
         get { return _Gold; }
-        private set { _Gold = value; this.RaiseGoldChanged(this._Gold); }
+        private set { _Gold = value;
+            this.RaiseGoldChanged(this._Gold); }
     }
     
     private Dictionary<Slot, Item> _Slots;
@@ -58,7 +59,7 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         ((ActionDetecter)gameObject.GetComponent<ActionDetecter>()).MineFinished += this.GettingItem;
-        this._Slots = new Dictionary<Slot, Item>((int)(this.InventorySize.x * this.InventorySize.y));
+        this._Slots = new Dictionary<Slot, Item>(16);
     }
 
     public void AddItem(Item p_Item)
@@ -164,10 +165,7 @@ public class Inventory : MonoBehaviour
     public void DecreaseGold(int p_Gold)
     {
         if (this.Gold >= p_Gold)
-            this.Gold -= p_Gold;
-
-        else
-            this.RaiseGoldIsMissing(p_Gold - this.Gold);
+            this.Gold = this.Gold - p_Gold;
     }
 
     #endregion // Methods
@@ -181,21 +179,13 @@ public class Inventory : MonoBehaviour
     public event ItemEventHandler GotItem;
     public event ItemUIEventHandler GotNewItemsToShow;
     public event GoldEventHandler GoldChanged;
-    public event GoldEventHandler GoldIsMissing;
-    //public event ItemEventHandler RemovedItem;
 
     private void RaiseGoldChanged(int p_Gold)
     {
         if (this.GoldChanged != null)
             this.GoldChanged(p_Gold);
     }
-
-    private void RaiseGoldIsMissing(int p_Gold)
-    {
-        if (this.GoldIsMissing != null)
-            this.GoldIsMissing(p_Gold);
-    }
-
+    
     public void GettingItem(GameObject p_ItemHolder)
     {
         string itemHolderName = p_ItemHolder.tag == "Stone" ? "Rock" : p_ItemHolder.tag;
