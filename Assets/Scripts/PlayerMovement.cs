@@ -2,7 +2,15 @@
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
-{
+{ 
+    public enum State
+    {
+        Idle,
+        Walk,
+        Run
+      
+    }
+
     public float movespeed;
     public float speedMultiplicator;
     public float stamina;
@@ -81,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
 		{
-			GetComponent<Animation>().Play("orcattack");
+			GetComponent<Animation>().Play("orcwalk");
             if (singleplay == true)
             {
                 audio.Stop();
@@ -146,6 +154,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void IncreaseMoveSpeed()
     {
-        movespeed *= 0.95f;
+        movespeed *= 1.05f;
     }
 }
