@@ -8,9 +8,10 @@ namespace Assets.Scripts.Map
 {
     public class GroundTile : MonoBehaviour, IMapObject
     {
-        public Transform Transform1;
-
-        public  bool IsObstacle { get { return false; } }
+        public Transform Ground;
+        public Transform Beach;
+        public Transform Water;
+        public bool IsObstacle { get { return false; } }
         public float XOffset { get { return xOffset; } set { xOffset = value; } }
         public float ZOffset { get { return zOffset; } set { zOffset = value; } }
         public string SaveString { get { return "Ground"; } }
@@ -20,7 +21,7 @@ namespace Assets.Scripts.Map
 
         public Transform GetTransform()
         {
-            return Transform1;
+            return Ground;
         }
     }
 }

@@ -11,10 +11,11 @@ namespace Assets.Scripts.Map
         public Transform Transform1;
         public Transform Transform2;
         public Transform Transform3;
+        public Transform Palm;
         public Material highlightMat;
 
 
-        public bool IsObstacle{ get { return true; } }
+        public bool IsObstacle { get { return true; } }
         public float XOffset { get { return xOffset; } set { xOffset = value; } }
         public float ZOffset { get { return zOffset; } set { zOffset = value; } }
         public string SaveString { get { return "Tree"; } }

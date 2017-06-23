@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Map;
 
-public class ActionDetecter : MonoBehaviour {
+public class ActionDetecter : MonoBehaviour
+{
 
     public GameObject workDoneAnimation;
 
@@ -43,7 +44,7 @@ public class ActionDetecter : MonoBehaviour {
             //Event trigger
             if (!blocked && canTrigger)
             {
-                switch(toMine.tag)
+                switch (toMine.tag)
                 {
                     case "Tree":
                         duration = chopDuration / 60.0f;
@@ -106,7 +107,11 @@ public class ActionDetecter : MonoBehaviour {
             targetColl = coll;
             canTrigger = true;
             toMine = coll.gameObject;
-            HighlightObject(toMine);
+            try
+            {
+                HighlightObject(toMine);
+            }
+            catch { }
 
             this.transform.GetChild(0).gameObject.SetActive(true);
         }
@@ -115,7 +120,7 @@ public class ActionDetecter : MonoBehaviour {
     private void OnTriggerExit(Collider coll)
     {
         if (!Input.GetKey(KeyCode.E))
-        { 
+        {
             canTrigger = false;
             toMine = coll.gameObject;
 
