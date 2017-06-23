@@ -41,6 +41,7 @@ public class CountDownController : MonoBehaviour
             secondsLeft -= 1;
         }
 
+        // ToDo Detect when loose or won
         OnCountdownOver(true);
     }
 	

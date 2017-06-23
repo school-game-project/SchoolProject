@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,39 +8,54 @@ using UnityEngine.UI;
 public class TextElement : MonoBehaviour
 {
 	private List<String> text = new List<String>();
-    public TextItem activeText;
-    public GameObject TextLeftTop;
-	protected int currentPage = 0;
-	protected int textOffset = 0;
-    protected bool inAction = false;
+    private TextItem activeText;
+    private TextManager manager;
+	private int currentPage = 0;
+    private bool playTextAnimation = false;
+    private bool inAction = false;
 
-    void Start(){
+    public void StartDisplayText(TextManager manager, TextItem textDataClass)
+	{
+        this.manager = manager;
+
+        if(!this.inAction){
+			this.activeText = textDataClass;
+			this.manager.GetTextBox().SetActive(true);
+			this.inAction = true;
+            this.clearText();
+			StartCoroutine(TextOutpt());   
+        }else{
+            this.CancelDisplay();
+        }
     }
 
-	public void SetGraphicIcon()
-	{
-
+    private void clearText(){
+		this.GetComponent<Text>().text = "";
 	}
 
-    public void StartDisplayText(TextItem textDataClass)
-	{
-        this.activeText = textDataClass;
-        this.TextLeftTop.SetActive(true);
-        this.inAction = true;
-		StartCoroutine(Timer(0.2f));
-	}
+    private string getPageText(){
+        return this.activeText.pages[this.currentPage];
+    }
 
-	virtual public void ButtonClick()
+
+
+    public void ButtonClick()
 	{
 
         if(this.activeText.pages.Count-1 > this.currentPage){
-            if(this.inAction){
-                this.inAction = false;
+
+            if(this.playTextAnimation){
+                this.playTextAnimation = false;
+            }else{
+                this.currentPage++;
+                StartCoroutine(TextOutpt());
             }
-            this.textOffset = 0;
-			this.currentPage++;
-            this.inAction = true;
-			StartCoroutine(Timer(0.01f));
+
+            if(this.activeText.pages.Count - 2 < this.currentPage){
+	            GameObject TextButton = GameObject.FindWithTag("TextSystemButton");
+	            TextButton.transform.GetChild(0).gameObject.SetActive(true);
+	            TextButton.transform.GetChild(1).gameObject.SetActive(false);
+            }
         }else{
             this.CancelDisplay();
         }
@@ -48,53 +64,34 @@ public class TextElement : MonoBehaviour
 
 	virtual public void CancelDisplay()
 	{
-        this.TextLeftTop.SetActive(false);
+        this.manager.GetTextBox().SetActive(false);
         this.inAction = false;
         this.currentPage = 0;
-        this.textOffset = 0;
         this.activeText = null;
-
+        this.playTextAnimation = false;
 	}
 
-    // Text Generator
+	virtual protected IEnumerator TextOutpt()
+    {
+        if(this.inAction){
+            this.clearText();
+            this.playTextAnimation = true;
+			foreach (char c in this.getPageText())
+			{
+	            this.GetComponent<Text>().text += c;
 
-	public void GenerateTextOutput()
-	{
-        // Content of current Page
-
-        if (this.textOffset <= this.activeText.pages[this.currentPage].Length)
-        {
-            this.GetComponent<Text>().text = this.GetPassageByOffset();
-            this.textOffset++;
-            if(this.inAction){
-    		    StartCoroutine(Timer(0.01f));
-            }else{
-                this.inAction = false;
-            }
-        }
-	}
-
-
-    private string GetPassageByOffset(){
-        string text_passage = "";
-        string full_text = this.activeText.pages[this.currentPage];
-        int i = 0;
-
-        foreach (char c in full_text){
-            if (i < this.textOffset){
-                text_passage += c;    
-            }
-            i++;
-        }
-        return text_passage;
-   }
-
-
-	virtual protected IEnumerator Timer(float waitTime)
-	{
-
-		yield return new WaitForSeconds(waitTime);
-		this.GenerateTextOutput();
+                if (this.playTextAnimation)
+				{
+					yield return new WaitForSeconds(0.01f); 
+				}
+				else
+				{
+					break;
+                }
+			}
+            this.GetComponent<Text>().text = this.getPageText();
+            this.playTextAnimation = false;
+		}
 	}
 }
 

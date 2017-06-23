@@ -8,8 +8,60 @@ public class TextManager : MonoBehaviour
 {
     public TextItem activeTextPassage;
     public TextElement TextElement;
+    public GameController gc;
+    private GameObject TextTopLeft;
 
-    public void play(TextToPlay texttype){
+    public void Start()
+    {
+        gc.OnGameStart += StoryStartEventListner;
+        gc.OnGameEnd += StoryLostEventListner;
+        gc.OnGameWin += StoryWonEventListner;
+
+		this.TextTopLeft = this.gameObject.transform.GetChild(0).gameObject;
+
+	}
+
+    public GameObject GetTextBox(){
+        return this.TextTopLeft;
+    }
+
+    // Story Start Event Handler
+    public void StoryStartEventListner() {
+        this.play(TextToPlay.StoryStart);
+	}
+
+	// Story Won Event Handler
+	public void StoryWonEventListner()
+	{
+        this.play(TextToPlay.StoryWon);
+	}
+
+	// Story Lost Event Handler
+	public void StoryLostEventListner()
+	{
+        this.play(TextToPlay.StoryLost);
+	}
+
+	// Story TutorialAtStart Event Handler
+	public void TutorialAtStartEventListner()
+	{
+		this.play(TextToPlay.TutorialAtStart);
+	}
+
+	// Story TutorialCampEventListner Event Handler
+	public void TutorialCampEventListner()
+	{
+		this.play(TextToPlay.TutorialCamp);
+	}
+
+	// Story TutorialShipyardEventListner Event Handler
+	public void TutorialShipyardEventListner()
+	{
+		this.play(TextToPlay.TutorialShipyard);
+	}
+
+
+    private void play(TextToPlay texttype) {
         string text = "";
 
         switch(texttype){
@@ -40,16 +92,16 @@ public class TextManager : MonoBehaviour
 
         }
 
+        // Load Text from JSON File
 		TextItem TextContainer = JsonUtility.FromJson<TextItem>(text);
-        this.TextElement.StartDisplayText(TextContainer);
+
+        this.TextElement.StartDisplayText(this, TextContainer);
     }
 
+
+
     public void ClickEvent(){
-        if(this.TextElement.activeText == null){
-            this.play(TextToPlay.StoryStart);
-        }else{
-            this.TextElement.ButtonClick();    
-        }
+        this.TextElement.ButtonClick();    
     }
 
 	public string getFileContent(string Path)
