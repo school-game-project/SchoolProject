@@ -6,7 +6,7 @@ public class Food : Item
 {
     #region Fields & Props
 
-    public override string _SpritePath { get; protected set; }
+    public override string SpritePath { get; protected set; }
 
     #endregion // Fields & Props
 
@@ -14,7 +14,7 @@ public class Food : Item
 
     public override void Start()
     {
-        this._SpritePath = @"";
+        this.SpritePath = @"";
         base.Start();
     }
 

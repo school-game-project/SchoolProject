@@ -27,7 +27,7 @@ public class Item : MonoBehaviour
         set { _Amount = value; }
     }
 
-    public virtual string _SpritePath { get; protected set; }
+    public virtual string SpritePath { get; protected set; }
 
     #endregion // Fields & Props
 

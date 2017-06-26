@@ -30,7 +30,7 @@ public class Slot : MonoBehaviour//, IPointerEnterHandler, IDragHandler
 
             if (this.transform.GetChild(1).GetComponent<Image>().sprite == null)
             {
-                this.transform.GetChild(1).GetComponent<Image>().sprite = (Sprite)Resources.Load<Sprite>(p_Item._SpritePath);
+                this.transform.GetChild(1).GetComponent<Image>().sprite = (Sprite)Resources.Load<Sprite>(p_Item.SpritePath);
                 this.transform.GetChild(1).GetComponent<Image>().color = new Color(255, 255, 255, 255);
             }
         }

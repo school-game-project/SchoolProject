@@ -6,7 +6,7 @@ public class Stone : Item
 {
     #region Fields & Props
 
-    public override string _SpritePath { get; protected set; }
+    public override string SpritePath { get; protected set; }
 
     #endregion // Fields & Props
 
@@ -14,7 +14,7 @@ public class Stone : Item
 
     public override void Start()
     {
-        this._SpritePath = @"InventoryItems/LowPolyArtStyleIcons/128px/Transparent/stone";
+        this.SpritePath = @"InventoryItems/LowPolyArtStyleIcons/128px/Transparent/stone";
         base.Start();
     }
 

@@ -11,7 +11,7 @@ public class GoldUIController : MonoBehaviour
     
     private void Awake()
     {
-        this.GetComponent<TextMeshProUGUI>().text = 0 + "";
+        this.GetComponent<TextMeshProUGUI>().text = 0.ToString();
     }
 
     public void SetGold(int p_Gold)

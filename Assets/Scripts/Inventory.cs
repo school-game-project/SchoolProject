@@ -49,9 +49,7 @@ public class Inventory : MonoBehaviour
     {
         get { return UnityEngine.Random.Range(1, 6) == 1; }
     }
-
-    public Vector2 InventorySize;
-
+    
     #endregion // Fields & Props
 
     #region Methods
@@ -74,10 +72,9 @@ public class Inventory : MonoBehaviour
                     this.Gold += (int)temp[2];
                     this._Slots[keySlot].Amount += (int)temp[1];
 
-                    if (this.GotNewItemsToShow != null)
-                        this.GotNewItemsToShow(temp);
+                    this.RaiseGotNewItemsToShow(temp);
 
-                    this.GotItem(this._Slots[keySlot]);
+                    this.RaiseGotItem(this._Slots[keySlot]);
                     return;
                 }
         
@@ -99,10 +96,9 @@ public class Inventory : MonoBehaviour
                     this._Slots[keySlot] = p_Item;
                     this._Slots.Where(s => s.Value == p_Item).FirstOrDefault().Key.GetComponent<Slot>().MyItem = p_Item;
 
-                    if (this.GotNewItemsToShow != null)
-                        this.GotNewItemsToShow(temp);
+                    this.RaiseGotNewItemsToShow(temp);
 
-                    this.GotItem(p_Item);
+                    this.RaiseGotItem(p_Item);
                     return;
                 }
             }
@@ -185,7 +181,19 @@ public class Inventory : MonoBehaviour
         if (this.GoldChanged != null)
             this.GoldChanged(p_Gold);
     }
-    
+
+    private void RaiseGotItem(Item p_Item)
+    {
+        if (this.GotItem != null)
+            this.GotItem(p_Item);
+    }
+
+    private void RaiseGotNewItemsToShow(object[] p_AmountsOfItems)
+    {
+        if (this.GotNewItemsToShow != null)
+            this.GotNewItemsToShow(p_AmountsOfItems);
+    }
+
     public void GettingItem(GameObject p_ItemHolder)
     {
         string itemHolderName = p_ItemHolder.tag == "Stone" ? "Rock" : p_ItemHolder.tag;
