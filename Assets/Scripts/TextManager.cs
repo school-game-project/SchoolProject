@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -10,14 +11,22 @@ public class TextManager : MonoBehaviour
     public TextElement TextElement;
     public GameController gc;
     private GameObject TextTopLeft;
+    public Dictionary<TextToPlay, List<string>> textDic = new Dictionary<TextToPlay, List<string>>();
 
-    public void Start()
+    public void Awake()
     {
+        textDic.Add(TextToPlay.StoryLost, new List <string> { "Loser" });
+        textDic.Add(TextToPlay.StoryStart, new List<string>  { "Wir waren eine ganze Bande von Orgs und erkundeten die große See und trafen auf eine kleine Insel, die auf keine unserer Karten eingezeichnet war. Wir legten mit unserem Schiff vor der Küste der Insel an und stiegen in kleine Beiboote um die Insel zu erreichen.",
+             "Das erste, das wir sahen, als wir ans Ufer stießen war ein riesiger Berg in der Mitte der Insel. Auf ersten Blick schien sie von nichts als kleinen Tieren bewohnt. Wir machten uns sofort an das Erkunden. Ich und ein paar andere Orgs machten sich auf um den berg zu erkunden. Je höher wir stiegen, desto heißer wurde es. Wir stellten fest, das es ein Vulkan war.",
+             "Wir wussten, das er bald ausbrechen würde. Wir rannten so schnell wir konnten den Berg hinab. In der panik verlor ich meine Gruppe. Ich hetzte angst erfüllt durch den Wald in richtung strand.",
+             "Als ich endlich am Strand angekommen war, sah ich wie meine kammeraden wegsegelte. Ich war allein, auf einer Insel auf der ein Vulkan bald ausbrechen würde. Ich brauchte ein Boot um mich zu retten." });
+        textDic.Add(TextToPlay.StoryWon, new List<string> { "Winner" });
+
         gc.OnGameStart += StoryStartEventListner;
         gc.OnGameEnd += StoryLostEventListner;
         gc.OnGameWin += StoryWonEventListner;
 
-		this.TextTopLeft = this.gameObject.transform.GetChild(0).gameObject;
+        this.TextTopLeft = this.gameObject.transform.GetChild(0).gameObject;
 
 	}
 
@@ -62,39 +71,10 @@ public class TextManager : MonoBehaviour
 
 
     private void play(TextToPlay texttype) {
-        string text = "";
-
-        switch(texttype){
-
-            case TextToPlay.StoryStart:
-                text = getFileContent("Assets/Scripts/Text/StoryStart.json");
-            break;
-
-            case TextToPlay.StoryWon:
-                text = getFileContent("Assets/Scripts/Text/StoryWon.json");
-            break;
-
-            case TextToPlay.StoryLost:
-                text = getFileContent("Assets/Scripts/Text/StoryLost.json");
-            break;
-                
-            case TextToPlay.TutorialAtStart:
-                text = getFileContent("Assets/Scripts/Text/TutorialAtStart.json");
-            break;
-
-            case TextToPlay.TutorialCamp:
-                text = getFileContent("Assets/Scripts/Text/TutorialCamp.json");
-            break;
-
-            case TextToPlay.TutorialShipyard:
-                text = getFileContent("Assets/Scripts/Text/TutorialShipyard.json");
-            break;
-
-        }
-
         // Load Text from JSON File
-		TextItem TextContainer = JsonUtility.FromJson<TextItem>(text);
-
+        TextItem TextContainer = new TextItem();
+        TextContainer.pages = textDic[texttype]; //JsonUtility.FromJson<TextItem>(text);
+        TextContainer.name = texttype.ToString();
         this.TextElement.StartDisplayText(this, TextContainer);
     }
 
@@ -103,11 +83,4 @@ public class TextManager : MonoBehaviour
     public void ClickEvent(){
         this.TextElement.ButtonClick();    
     }
-
-	public string getFileContent(string Path)
-	{
-		string text = System.IO.File.ReadAllText(@Path);
-        return text;
-    }
-
 }

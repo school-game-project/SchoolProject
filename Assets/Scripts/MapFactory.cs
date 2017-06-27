@@ -81,7 +81,7 @@ public class MapFactory : MonoBehaviour
             }
         }
         // Spieler erstellen:
-        Instantiate(player, new Vector3(spawnPosX * distanceScale, 1, spawnPosZ * distanceScale), Quaternion.identity);
+        Instantiate(player, new Vector3(spawnPosX * distanceScale, 0 + player.Find("m01_02").GetComponent<SkinnedMeshRenderer>().sharedMesh.bounds.extents.y * player.transform.localScale.y, spawnPosZ * distanceScale), Quaternion.identity);
 
         CreateLayout();
     }

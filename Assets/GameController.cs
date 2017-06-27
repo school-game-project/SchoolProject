@@ -6,6 +6,7 @@ using Nature;
 
 public class GameController : MonoBehaviour
 {
+    public int totalSecondsGame;
     public DayNightController dayNightController;
     public CountDownController countdownController;
     public Animator MenuAnimations;
@@ -31,12 +32,16 @@ public class GameController : MonoBehaviour
 
         Instantiate(Interface);
 
+
         countdownController = GameObject.FindWithTag("CountDown").GetComponent<CountDownController>();
+        countdownController.secondsLeft = totalSecondsGame;
         countdownController.StartCountDown();
         countdownController.OnCountdownOver += OnCountDownDone;
 
-        OnGameStart();
-
+        if(OnGameStart != null)
+        {
+            OnGameStart();
+        }
     }
 
     private void Update()

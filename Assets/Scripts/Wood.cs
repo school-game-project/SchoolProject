@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class Wood : Item
 {
-    #region Fields & Props
-
-    public override string SpritePath { get; protected set; }
-
-    #endregion // Fields & Props
-
     #region Methods
 
     public override void Start()

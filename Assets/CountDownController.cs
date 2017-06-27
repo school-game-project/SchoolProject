@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class CountDownController : MonoBehaviour
 {
-    public float totalSecondsPerGame;
     public float secondsLeft;
     public Text countdownText;
 
@@ -16,11 +15,6 @@ public class CountDownController : MonoBehaviour
     private int seconds;
 
 
-    private void Awake()
-    {
-        
-        secondsLeft = totalSecondsPerGame;
-    }
 
 
     public void StartCountDown()

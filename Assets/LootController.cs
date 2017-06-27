@@ -25,6 +25,7 @@ public class LootController : MonoBehaviour
     {
         GameObject item = Instantiate(ItemPrefab, Vector3.zero, Quaternion.identity) as GameObject;
         item.transform.SetParent(ItemContent.transform);
+        item.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         if(Items[0].ToString() == "Wood")
         {
             item.GetComponent<LootItem>().SetMe(wood, (int)Items[1]);
